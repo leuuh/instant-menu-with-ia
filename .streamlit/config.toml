@@ -1,0 +1,9 @@
+[server]
+# Mesmo limite do PDF em core/arquivos.py
+maxUploadSize = 50
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"

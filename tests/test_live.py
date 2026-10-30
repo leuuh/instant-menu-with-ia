@@ -30,6 +30,21 @@ def _desenhar_cardapio(caminho: Path) -> None:
     imagem.save(caminho)
 
 
+def test_extrai_precos_de_pdf(tmp_path: Path) -> None:
+    config = Config(dir_logs=tmp_path / "logs")
+    if config.gemini_api_key is None:
+        pytest.skip("GEMINI_API_KEY não definida no .env")
+    imagem = tmp_path / "cardapio.png"
+    _desenhar_cardapio(imagem)
+    pdf = tmp_path / "cardapio_ficticio.pdf"
+    Image.open(imagem).save(pdf)
+
+    resultado = extrair_cardapio(pdf, criar_provedor(config), config)
+
+    precos = {item.preco for categoria in resultado.cardapio.categorias for item in categoria.itens}
+    assert {preco for _, preco in LINHAS_CARDAPIO if preco is not None} <= precos
+
+
 def test_extrai_precos_de_cardapio_ficticio(tmp_path: Path) -> None:
     config = Config(dir_logs=tmp_path / "logs")
     if config.gemini_api_key is None:

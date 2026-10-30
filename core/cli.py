@@ -4,14 +4,10 @@ import argparse
 import sys
 from pathlib import Path
 
-from core.config import Config, ConfigErro
-from core.extract import ExtracaoInvalidaErro, extrair_cardapio
-from core.imagens import ImagemInvalidaErro
+from core.config import Config
+from core.extract import ERROS_EXTRACAO, extrair_cardapio
 from core.providers import criar_provedor
-from core.providers.base import ProvedorErro
 from core.schema import ResultadoExtracao
-
-ERROS_ESPERADOS = (ConfigErro, ImagemInvalidaErro, ProvedorErro, ExtracaoInvalidaErro)
 
 
 def criar_parser() -> argparse.ArgumentParser:
@@ -19,8 +15,10 @@ def criar_parser() -> argparse.ArgumentParser:
         prog="python -m core.cli", description="Cardápio Instantâneo: foto de cardápio para JSON."
     )
     comandos = parser.add_subparsers(dest="comando", required=True)
-    extrair = comandos.add_parser("extrair", help="extrai o cardápio de uma imagem JPG/PNG")
-    extrair.add_argument("imagem", type=Path, help="caminho da foto do cardápio")
+    extrair = comandos.add_parser(
+        "extrair", help="extrai o cardápio de uma imagem JPG/PNG ou de um PDF"
+    )
+    extrair.add_argument("arquivo", type=Path, help="caminho da foto ou do PDF do cardápio")
     extrair.add_argument("--saida", type=Path, help="arquivo JSON de saída (padrão: stdout)")
     extrair.add_argument("--provedor", help="sobrescreve LLM_PROVIDER do .env")
     extrair.add_argument("--modelo", help="sobrescreve LLM_MODEL do .env")
@@ -61,13 +59,13 @@ def main(argv: list[str] | None = None) -> int:
     for fluxo in (sys.stdout, sys.stderr):
         fluxo.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
     args = criar_parser().parse_args(argv)
-    if not args.imagem.is_file():
-        print(f"Erro: arquivo não encontrado: {args.imagem}", file=sys.stderr)
+    if not args.arquivo.is_file():
+        print(f"Erro: arquivo não encontrado: {args.arquivo}", file=sys.stderr)
         return 1
     config = _config_com_sobrescritas(args)
     try:
-        resultado = extrair_cardapio(args.imagem, criar_provedor(config), config)
-    except ERROS_ESPERADOS as erro:
+        resultado = extrair_cardapio(args.arquivo, criar_provedor(config), config)
+    except ERROS_EXTRACAO as erro:
         print(f"Erro: {erro}", file=sys.stderr)
         return 1
     json_saida = resultado.model_dump_json(indent=2)

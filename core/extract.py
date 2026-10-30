@@ -9,8 +9,8 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from core.config import RAIZ_PROJETO, Config
-from core.imagens import carregar_imagem
+from core.arquivos import ArquivoInvalidoErro, carregar_arquivo
+from core.config import RAIZ_PROJETO, Config, ConfigErro
 from core.precos import calcular_custo
 from core.providers.base import Correcao, Midia, ProvedorErro, ProvedorLLM, RespostaLLM
 from core.registro import registrar_extracao
@@ -32,6 +32,10 @@ class ExtracaoInvalidaErro(Exception):
     def __init__(self, mensagem: str, metricas: MetricasExtracao) -> None:
         super().__init__(mensagem)
         self.metricas = metricas
+
+
+# Falhas previstas: a interface mostra a mensagem em vez de um traceback.
+ERROS_EXTRACAO = (ConfigErro, ArquivoInvalidoErro, ProvedorErro, ExtracaoInvalidaErro)
 
 
 @dataclass
@@ -86,8 +90,8 @@ def formatar_erros(erro: ValidationError) -> str:
 
 
 def extrair_cardapio(caminho: Path, provedor: ProvedorLLM, config: Config) -> ResultadoExtracao:
-    """Extrai o cardápio de uma imagem JPG/PNG."""
-    midia = carregar_imagem(caminho, config.max_lado_imagem)
+    """Extrai o cardápio de um arquivo JPG, PNG ou PDF."""
+    midia = carregar_arquivo(caminho, config.max_lado_imagem)
     return extrair_de_midias([midia], provedor, config, origem=caminho.name)
 
 

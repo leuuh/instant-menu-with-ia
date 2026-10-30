@@ -21,7 +21,7 @@ class Config(BaseSettings):
     llm_provider: str = "gemini"
     llm_model: str | None = None  # None = modelo padrão do provedor
     gemini_api_key: SecretStr | None = None
-    limiar_confianca: float = Field(default=0.7, ge=0, le=1)
+    limiar_confianca: float = Field(default=0.9, ge=0, le=1)  # medido em fotos: ver decisoes.md
     max_correcoes: int = Field(default=2, ge=0)
     max_lado_imagem: int = Field(default=3072, ge=256)
     dir_logs: Path = RAIZ_PROJETO / "logs"

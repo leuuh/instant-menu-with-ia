@@ -1,6 +1,20 @@
 """Regras que marcam itens para revisão humana."""
 
+from collections.abc import Iterable
+
 from core.schema import ExtracaoCardapio, ItemExtraido, ItemParaRevisao, MotivoRevisao
+
+ROTULOS_MOTIVO = {
+    MotivoRevisao.CONFIANCA_BAIXA: "leitura incerta",
+    MotivoRevisao.PRECO_AUSENTE: "sem preço",
+    MotivoRevisao.PRECO_VARIACAO_AUSENTE: "variação sem preço",
+    MotivoRevisao.PRECO_ADICIONAL_AUSENTE: "adicional sem preço",
+}
+
+
+def rotular_motivos(motivos: Iterable[MotivoRevisao]) -> str:
+    """Motivos em texto para o dono do restaurante (vazio se não houver nenhum)."""
+    return ", ".join(ROTULOS_MOTIVO[motivo] for motivo in motivos)
 
 
 def motivos_do_item(item: ItemExtraido, limiar_confianca: float) -> list[MotivoRevisao]:

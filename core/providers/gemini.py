@@ -1,5 +1,6 @@
 """Provedor Google Gemini (SDK google-genai)."""
 
+import time
 from collections.abc import Sequence
 from typing import Any
 
@@ -19,6 +20,10 @@ from core.providers.base import (
 
 TENTATIVAS_HTTP = 3  # retry do SDK para 429/5xx e timeout; independe das correções de validação
 TIMEOUT_HTTP_MS = 120_000  # por tentativa; sem limite, uma chamada presa espera indefinidamente
+ERROS_CONEXAO = (httpx.ReadError, httpx.WriteError, httpx.RemoteProtocolError)  # o SDK não repete
+PAUSA_RECONEXAO_S = 2.0
+# Em fotos reais, a resolução padrão gerou mais erros de leitura; ver docs/decisoes.md.
+RESOLUCAO_IMAGEM = types.PartMediaResolutionLevel.MEDIA_RESOLUTION_ULTRA_HIGH
 FINAIS_NORMAIS = {None, types.FinishReason.STOP, types.FinishReason.FINISH_REASON_UNSPECIFIED}
 
 
@@ -57,12 +62,9 @@ class ProvedorGemini(ProvedorLLM):
             response_json_schema=schema,
             max_output_tokens=self._max_tokens_saida,
         )
+        conversa = montar_conversa(instrucoes, midias, correcoes)
         try:
-            resposta = self._cliente.models.generate_content(
-                model=self.modelo,
-                contents=montar_conversa(instrucoes, midias, correcoes),
-                config=config,
-            )
+            resposta = self._chamar_reconectando(conversa, config)
         except errors.APIError as erro:
             raise ProvedorErro(f"Gemini retornou erro {erro.code}: {erro.message}") from erro
         except httpx.TimeoutException as erro:
@@ -77,12 +79,30 @@ class ProvedorGemini(ProvedorLLM):
             modelo=self.modelo,
         )
 
+    def _chamar_reconectando(
+        self, conversa: list[types.Content], config: types.GenerateContentConfig
+    ) -> types.GenerateContentResponse:
+        """Repete quando a conexão cai no meio da resposta; a última falha chega a quem chamou."""
+        for tentativa in range(1, TENTATIVAS_HTTP):
+            try:
+                return self._gerar(conversa, config)
+            except ERROS_CONEXAO:
+                time.sleep(PAUSA_RECONEXAO_S * tentativa)
+        return self._gerar(conversa, config)
+
+    def _gerar(
+        self, conversa: list[types.Content], config: types.GenerateContentConfig
+    ) -> types.GenerateContentResponse:
+        return self._cliente.models.generate_content(
+            model=self.modelo, contents=conversa, config=config
+        )
+
 
 def montar_conversa(
     instrucoes: str, midias: Sequence[Midia], correcoes: Sequence[Correcao]
 ) -> list[types.Content]:
     """Turno do usuário (mídias + instruções) seguido de pares modelo/usuário de correção."""
-    partes = [types.Part.from_bytes(data=m.dados, mime_type=m.mime) for m in midias]
+    partes = [_parte_da_midia(m) for m in midias]
     conversa = [types.Content(role="user", parts=[*partes, types.Part(text=instrucoes)])]
     for correcao in correcoes:
         conversa.append(
@@ -90,6 +110,12 @@ def montar_conversa(
         )
         conversa.append(types.Content(role="user", parts=[types.Part(text=correcao.mensagem_erro)]))
     return conversa
+
+
+def _parte_da_midia(midia: Midia) -> types.Part:
+    """Imagem usa a resolução máxima; PDF fica no padrão, pois o texto já vem no arquivo."""
+    resolucao = None if midia.mime == "application/pdf" else RESOLUCAO_IMAGEM
+    return types.Part.from_bytes(data=midia.dados, mime_type=midia.mime, media_resolution=resolucao)
 
 
 def _extrair_texto(resposta: types.GenerateContentResponse) -> str:

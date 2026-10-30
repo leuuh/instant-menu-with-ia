@@ -13,7 +13,12 @@ from core.providers.base import (
     RespostaBloqueadaErro,
     RespostaTruncadaErro,
 )
-from core.providers.gemini import TENTATIVAS_HTTP, TIMEOUT_HTTP_MS, ProvedorGemini
+from core.providers.gemini import (
+    RESOLUCAO_IMAGEM,
+    TENTATIVAS_HTTP,
+    TIMEOUT_HTTP_MS,
+    ProvedorGemini,
+)
 
 MIDIA = Midia(dados=b"\xff\xd8fake-jpeg", mime="image/jpeg")
 SCHEMA = {"type": "object"}
@@ -40,24 +45,35 @@ def _resposta(
     )
 
 
+Resultado = types.GenerateContentResponse | Exception
+
+
+@pytest.fixture(autouse=True)
+def sem_pausa(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr("core.providers.gemini.PAUSA_RECONEXAO_S", 0)
+
+
 class _ModelsFalso:
-    def __init__(self, resultado: types.GenerateContentResponse | Exception) -> None:
-        self.resultado = resultado
+    """Devolve os resultados em ordem; depois do último, repete o último."""
+
+    def __init__(self, resultado: Resultado | list[Resultado]) -> None:
+        self.resultados = resultado if isinstance(resultado, list) else [resultado]
         self.chamadas: list[dict[str, Any]] = []
 
     def generate_content(self, **kwargs: Any) -> types.GenerateContentResponse:
         self.chamadas.append(kwargs)
-        if isinstance(self.resultado, Exception):
-            raise self.resultado
-        return self.resultado
+        resultado = self.resultados[min(len(self.chamadas), len(self.resultados)) - 1]
+        if isinstance(resultado, Exception):
+            raise resultado
+        return resultado
 
 
 class _ClienteFalso:
-    def __init__(self, resultado: types.GenerateContentResponse | Exception) -> None:
+    def __init__(self, resultado: Resultado | list[Resultado]) -> None:
         self.models = _ModelsFalso(resultado)
 
 
-def _provedor(resultado: types.GenerateContentResponse | Exception) -> ProvedorGemini:
+def _provedor(resultado: Resultado | list[Resultado]) -> ProvedorGemini:
     return ProvedorGemini(cliente=_ClienteFalso(resultado))  # type: ignore[arg-type]
 
 
@@ -78,7 +94,18 @@ def test_monta_requisicao_com_midia_instrucoes_e_schema() -> None:
     assert turno.role == "user"
     assert turno.parts[0].inline_data.mime_type == "image/jpeg"
     assert turno.parts[0].inline_data.data == MIDIA.dados
+    assert turno.parts[0].media_resolution.level == RESOLUCAO_IMAGEM
     assert turno.parts[1].text == "extraia"
+
+
+def test_pdf_fica_na_resolucao_padrao() -> None:
+    provedor = _provedor(_resposta())
+    pdf = Midia(dados=b"%PDF-1.7", mime="application/pdf")
+    provedor.gerar_json(instrucoes="extraia", midias=[pdf], schema=SCHEMA)
+
+    (turno,) = _chamada(provedor)["contents"]
+    assert turno.parts[0].inline_data.mime_type == "application/pdf"
+    assert turno.parts[0].media_resolution is None
 
 
 def test_correcoes_viram_turnos_modelo_e_usuario() -> None:
@@ -144,6 +171,24 @@ def test_erro_da_api_vira_provedor_erro() -> None:
 def test_erro_de_rede_vira_provedor_erro(erro: httpx.HTTPError, mensagem: str) -> None:
     with pytest.raises(ProvedorErro, match=mensagem):
         _provedor(erro).gerar_json(instrucoes="x", midias=[MIDIA], schema=SCHEMA)
+
+
+@pytest.mark.parametrize(
+    "erro",
+    [httpx.ReadError("x"), httpx.WriteError("x"), httpx.RemoteProtocolError("x")],
+)
+def test_conexao_derrubada_tenta_de_novo(erro: httpx.HTTPError) -> None:
+    provedor = _provedor([erro, erro, _resposta()])
+    resposta = provedor.gerar_json(instrucoes="x", midias=[MIDIA], schema=SCHEMA)
+    assert resposta.texto == '{"ok": true}'
+    assert len(provedor._cliente.models.chamadas) == 3  # type: ignore[attr-defined]
+
+
+def test_conexao_derrubada_sempre_desiste_apos_o_limite() -> None:
+    provedor = _provedor(httpx.ReadError("conexão derrubada"))
+    with pytest.raises(ProvedorErro, match="Falha de rede"):
+        provedor.gerar_json(instrucoes="x", midias=[MIDIA], schema=SCHEMA)
+    assert len(provedor._cliente.models.chamadas) == TENTATIVAS_HTTP  # type: ignore[attr-defined]
 
 
 def test_cliente_real_tem_timeout_e_retry(monkeypatch: pytest.MonkeyPatch) -> None:

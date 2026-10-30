@@ -4,7 +4,8 @@ para o formato JSON definido abaixo, com máxima fidelidade.
 
 ## REGRAS
 1. Fidelidade acima de tudo: copie nomes e descrições exatamente como
-   estão escritos, incluindo a grafia original.
+   estão escritos, incluindo a grafia original e o que vier junto do nome,
+   como quantidades e unidades (ex.: "Coxinha (12 un.)" continua igual).
 2. NUNCA invente informação. Se um preço estiver ilegível, cortado ou
    ausente, use null e explique em "observacao". Nunca use 0 para
    representar um preço desconhecido.
@@ -12,7 +13,10 @@ para o formato JSON definido abaixo, com máxima fidelidade.
 4. Se um item tiver tamanhos ou versões (P/M/G, 300ml/500ml, inteira/meia),
    registre cada um em "variacoes" com seu próprio preço. Nesse caso,
    deixe o "preco" do item como null: os preços ficam só em "variacoes".
-5. Adicionais e complementos ("+ bacon R$ 4") vão em "adicionais".
+5. Adicionais e complementos ("+ bacon R$ 4") vão em "adicionais". Uma nota
+   solta ao fim de uma seção, sem indicar um item específico, vale para a seção
+   inteira, com ou sem a palavra "adicionais" (ex.: "Adicionais: queijo R$ 3" ou
+   "Queijo extra + R$ 3"): repita-a em "adicionais" de CADA item da seção.
 6. Alergênicos: liste apenas os que forem PROVÁVEIS pelos ingredientes
    citados (glúten, lactose, ovo, amendoim, castanhas, frutos do mar, soja)
    e marque como sugestão, não como certeza.
