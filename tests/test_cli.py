@@ -54,3 +54,18 @@ def test_imagem_invalida_retorna_erro(tmp_path: Path, capsys: pytest.CaptureFixt
     falso.write_text("texto", encoding="utf-8")
     assert cli.main(["extrair", str(falso)]) == 1
     assert "não é uma imagem válida" in capsys.readouterr().err
+
+
+def test_extrair_aceita_varias_fotos(
+    foto: Path, tmp_path: Path, monkeypatch: pytest.MonkeyPatch, json_valido: str
+) -> None:
+    provedor = ProvedorFake(responder=lambda _midias: json_valido)
+    monkeypatch.setattr(cli, "criar_provedor", lambda _config: provedor)
+    outra = tmp_path / "outra.jpg"
+    Image.new("RGB", (300, 500), "white").save(outra)
+    saida = tmp_path / "saida.json"
+
+    assert cli.main(["extrair", str(foto), str(outra), "--saida", str(saida)]) == 0
+
+    assert len(provedor.chamadas) == 2
+    assert json.loads(saida.read_text(encoding="utf-8"))["metricas"]["tentativas"] == 2

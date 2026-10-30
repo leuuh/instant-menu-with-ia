@@ -5,6 +5,7 @@ import pytest
 
 from core.edicao import (
     CardapioEditado,
+    DescricaoEscolhida,
     aplicar_edicao,
     formatar_opcoes,
     interpretar_opcoes,
@@ -198,3 +199,27 @@ def test_formatar_opcoes_usa_interrogacao_para_preco_desconhecido() -> None:
 )
 def test_interpretar_opcoes(texto: str, esperado: list[tuple[str, Decimal | None]]) -> None:
     assert [(o.nome, o.preco) for o in interpretar_opcoes(texto)] == esperado
+
+
+def test_sem_sugestao_nao_ha_descricoes(json_valido: str) -> None:
+    assert _aplicar(_linhas(json_valido)).descricoes == {}
+
+
+def test_guarda_a_sugestao_e_a_escolha_do_dono(json_valido: str) -> None:
+    linhas = _linhas(json_valido)
+    linhas[0]["descricao_sugerida"] = "Sugestão usada"
+    linhas[0]["usar_sugestao"] = True
+    linhas[2]["descricao_sugerida"] = "Sugestão ignorada"
+    edicao = _aplicar(linhas)
+
+    assert edicao.descricoes == {
+        ("Lanches", 0): DescricaoEscolhida("Sugestão usada", True),
+        ("Pizzas", 0): DescricaoEscolhida("Sugestão ignorada", False),
+    }
+    assert _item(edicao, 0, 0).descricao_original != "Sugestão usada"  # a original nunca muda
+
+
+def test_marcar_usar_sem_texto_nao_cria_descricao(json_valido: str) -> None:
+    linhas = _linhas(json_valido)
+    linhas[0]["usar_sugestao"] = True
+    assert _aplicar(linhas).descricoes == {}

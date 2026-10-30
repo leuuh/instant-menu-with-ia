@@ -5,7 +5,7 @@ import sys
 from pathlib import Path
 
 from core.config import Config
-from core.extract import ERROS_EXTRACAO, extrair_cardapio
+from core.extract import ERROS_EXTRACAO, extrair_arquivos
 from core.providers import criar_provedor
 from core.schema import ResultadoExtracao
 
@@ -16,9 +16,9 @@ def criar_parser() -> argparse.ArgumentParser:
     )
     comandos = parser.add_subparsers(dest="comando", required=True)
     extrair = comandos.add_parser(
-        "extrair", help="extrai o cardápio de uma imagem JPG/PNG ou de um PDF"
+        "extrair", help="extrai o cardápio de até 5 fotos JPG/PNG ou de 1 PDF"
     )
-    extrair.add_argument("arquivo", type=Path, help="caminho da foto ou do PDF do cardápio")
+    extrair.add_argument("arquivos", type=Path, nargs="+", help="até 5 fotos ou 1 PDF")
     extrair.add_argument("--saida", type=Path, help="arquivo JSON de saída (padrão: stdout)")
     extrair.add_argument("--provedor", help="sobrescreve LLM_PROVIDER do .env")
     extrair.add_argument("--modelo", help="sobrescreve LLM_MODEL do .env")
@@ -41,6 +41,7 @@ def resumo(resultado: ResultadoExtracao) -> str:
         f"  - {item.categoria} / {item.nome}: {', '.join(item.motivos)}"
         for item in resultado.revisao
     ]
+    linhas += [f"Aviso: {aviso}" for aviso in resultado.avisos]
     linhas.append(
         f"Modelo: {metricas.provedor}/{metricas.modelo} | tentativas: {metricas.tentativas} | "
         f"tokens: {metricas.tokens_entrada} entrada / {metricas.tokens_saida} saída | "
@@ -59,12 +60,13 @@ def main(argv: list[str] | None = None) -> int:
     for fluxo in (sys.stdout, sys.stderr):
         fluxo.reconfigure(encoding="utf-8")  # type: ignore[union-attr]
     args = criar_parser().parse_args(argv)
-    if not args.arquivo.is_file():
-        print(f"Erro: arquivo não encontrado: {args.arquivo}", file=sys.stderr)
-        return 1
+    for arquivo in args.arquivos:
+        if not arquivo.is_file():
+            print(f"Erro: arquivo não encontrado: {arquivo}", file=sys.stderr)
+            return 1
     config = _config_com_sobrescritas(args)
     try:
-        resultado = extrair_cardapio(args.arquivo, criar_provedor(config), config)
+        resultado = extrair_arquivos(args.arquivos, criar_provedor(config), config)
     except ERROS_EXTRACAO as erro:
         print(f"Erro: {erro}", file=sys.stderr)
         return 1

@@ -3,6 +3,7 @@ import io
 import json
 from decimal import Decimal
 
+from core.edicao import DescricaoEscolhida
 from core.export import COLUNAS_CSV, exportar_csv, exportar_json
 from core.revisao import itens_para_revisao
 from core.schema import ExtracaoCardapio
@@ -99,3 +100,34 @@ def test_csv_preserva_texto_com_ponto_e_virgula(json_valido: str) -> None:
     item = cardapio.categorias[0].itens[0]
     cardapio.categorias[0].itens[0] = item.model_copy(update={"descricao_original": "a; b"})
     assert _linhas_csv(exportar_csv(cardapio, []))[0]["descricao"] == "a; b"
+
+
+def _descricoes() -> dict[tuple[str, int], DescricaoEscolhida]:
+    return {
+        ("Lanches", 0): DescricaoEscolhida("Texto usado", True),
+        ("Lanches", 1): DescricaoEscolhida("Texto não usado", False),
+    }
+
+
+def test_json_tem_original_sugerida_e_final(json_valido: str) -> None:
+    dados = json.loads(exportar_json(_cardapio(json_valido), [], _descricoes()))
+    usado, nao_usado = dados["categorias"][0]["itens"][:2]
+
+    assert usado["descricao_final"] == "Texto usado"
+    assert usado["descricao_sugerida"] == "Texto usado"
+    assert usado["descricao_original"] == "Pão, hambúrguer 120g, queijo e maionese da casa"
+    assert nao_usado["descricao_sugerida"] == "Texto não usado"
+    assert nao_usado["descricao_final"] is None
+
+
+def test_json_sem_sugestao_mantem_a_original(json_valido: str) -> None:
+    item = json.loads(exportar_json(_cardapio(json_valido), []))["categorias"][0]["itens"][0]
+    assert item["descricao_final"] == item["descricao_original"]
+    assert item["descricao_sugerida"] is None
+
+
+def test_csv_traz_a_final_e_a_original(json_valido: str) -> None:
+    linhas = _linhas_csv(exportar_csv(_cardapio(json_valido), [], _descricoes()))
+    assert linhas[0]["descricao"] == "Texto usado"
+    assert linhas[0]["descricao_original"] == "Pão, hambúrguer 120g, queijo e maionese da casa"
+    assert linhas[1]["descricao"] == ""

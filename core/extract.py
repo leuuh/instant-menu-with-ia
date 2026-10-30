@@ -1,153 +1,170 @@
-"""Extração do cardápio: chamada ao LLM, validação Pydantic e correção com retry."""
+"""Extração do cardápio: lê cada arquivo em paralelo, une os resultados e registra as métricas."""
 
-import hashlib
 import time
 from collections.abc import Sequence
-from dataclasses import dataclass, field
+from concurrent.futures import ThreadPoolExecutor
+from dataclasses import dataclass
+from decimal import Decimal
 from pathlib import Path
 from typing import Any
 
-from pydantic import ValidationError
-
-from core.arquivos import ArquivoInvalidoErro, carregar_arquivo
-from core.config import RAIZ_PROJETO, Config, ConfigErro
+from core.arquivos import ArquivoInvalidoErro, Entrada, carregar_arquivos
+from core.chamada import (
+    Consumo,
+    RespostaInvalidaErro,
+    carregar_prompt,
+    chamar_validando,
+    sha_curto,
+)
+from core.config import Config, ConfigErro
 from core.precos import calcular_custo
-from core.providers.base import Correcao, Midia, ProvedorErro, ProvedorLLM, RespostaLLM
+from core.providers.base import ProvedorErro, ProvedorLLM
 from core.registro import registrar_extracao
 from core.revisao import itens_para_revisao
-from core.schema import (
-    ExtracaoCardapio,
-    MetricasExtracao,
-    ResultadoExtracao,
-    schema_para_llm,
-)
-
-DIR_PROMPTS = RAIZ_PROJETO / "prompts"
-MAX_CARACTERES_ENTRADA_ERRO = 80
-
-
-class ExtracaoInvalidaErro(Exception):
-    """O modelo não produziu JSON válido nem após as correções."""
-
-    def __init__(self, mensagem: str, metricas: MetricasExtracao) -> None:
-        super().__init__(mensagem)
-        self.metricas = metricas
-
+from core.schema import ExtracaoCardapio, MetricasArquivo, MetricasLLM, ResultadoExtracao
+from core.unir import unir_cardapios
 
 # Falhas previstas: a interface mostra a mensagem em vez de um traceback.
-ERROS_EXTRACAO = (ConfigErro, ArquivoInvalidoErro, ProvedorErro, ExtracaoInvalidaErro)
+ERROS_EXTRACAO = (ConfigErro, ArquivoInvalidoErro, ProvedorErro, RespostaInvalidaErro)
 
 
-@dataclass
-class _Consumo:
-    """Tokens e tentativas somados ao longo das chamadas."""
+@dataclass(frozen=True)
+class _Leitura:
+    """Resultado de um arquivo: o cardápio lido ou o erro, sempre com o consumo."""
 
-    provedor: ProvedorLLM
-    prompt_sha: str
-    inicio: float = field(default_factory=time.perf_counter)
-    tokens_entrada: int = 0
-    tokens_saida: int = 0
-    tentativas: int = 0
-
-    def registrar(self, resposta: RespostaLLM) -> None:
-        self.tokens_entrada += resposta.tokens_entrada
-        self.tokens_saida += resposta.tokens_saida
-        self.tentativas += 1
-
-    def metricas(self) -> MetricasExtracao:
-        return MetricasExtracao(
-            provedor=self.provedor.nome,
-            modelo=self.provedor.modelo,
-            prompt_sha=self.prompt_sha,
-            tokens_entrada=self.tokens_entrada,
-            tokens_saida=self.tokens_saida,
-            custo_estimado_usd=calcular_custo(
-                self.provedor.modelo, self.tokens_entrada, self.tokens_saida
-            ),
-            tempo_s=round(time.perf_counter() - self.inicio, 2),
-            tentativas=self.tentativas,
-        )
-
-
-def carregar_prompt(nome: str) -> str:
-    """Lê um prompt versionado de prompts/."""
-    return (DIR_PROMPTS / nome).read_text(encoding="utf-8")
-
-
-def sha_curto(texto: str) -> str:
-    """8 primeiros caracteres do sha256: identifica a versão do prompt nos logs."""
-    return hashlib.sha256(texto.encode("utf-8")).hexdigest()[:8]
-
-
-def formatar_erros(erro: ValidationError) -> str:
-    """Erros de validação em linhas curtas, no formato que o modelo consegue corrigir."""
-    linhas = []
-    for detalhe in erro.errors(include_url=False):
-        local = ".".join(str(parte) for parte in detalhe["loc"]) or "(raiz)"
-        recebido = repr(detalhe.get("input"))[:MAX_CARACTERES_ENTRADA_ERRO]
-        linhas.append(f"- {local}: {detalhe['msg']} (recebido: {recebido})")
-    return "\n".join(linhas)
+    nome: str
+    metricas: MetricasLLM
+    cardapio: ExtracaoCardapio | None = None
+    erro: ProvedorErro | RespostaInvalidaErro | None = None
 
 
 def extrair_cardapio(caminho: Path, provedor: ProvedorLLM, config: Config) -> ResultadoExtracao:
     """Extrai o cardápio de um arquivo JPG, PNG ou PDF."""
-    midia = carregar_arquivo(caminho, config.max_lado_imagem)
-    return extrair_de_midias([midia], provedor, config, origem=caminho.name)
+    return extrair_arquivos([caminho], provedor, config)
 
 
-def extrair_de_midias(
-    midias: Sequence[Midia], provedor: ProvedorLLM, config: Config, origem: str = ""
+def extrair_arquivos(
+    caminhos: Sequence[Path], provedor: ProvedorLLM, config: Config
 ) -> ResultadoExtracao:
-    """Chama o LLM com até ``config.max_correcoes`` correções e registra o resultado no log."""
+    """Extrai o cardápio de 1 a 5 imagens ou de 1 PDF lidos do disco."""
+    return extrair_entradas(carregar_arquivos(caminhos, config.max_lado_imagem), provedor, config)
+
+
+def extrair_entradas(
+    entradas: Sequence[Entrada], provedor: ProvedorLLM, config: Config
+) -> ResultadoExtracao:
+    """Lê os arquivos em paralelo e une o que deu certo; só falha se nenhum puder ser lido."""
+    inicio = time.perf_counter()
     instrucoes = carregar_prompt("extracao.md")
-    consumo = _Consumo(provedor, sha_curto(instrucoes))
-    try:
-        cardapio = _chamar_com_correcoes(instrucoes, midias, consumo, config.max_correcoes)
-    except (ProvedorErro, ExtracaoInvalidaErro) as erro:
-        _registrar(origem, consumo.metricas(), config, erro=erro)
-        raise
+    leituras = _ler_em_paralelo(entradas, instrucoes, provedor, config)
+    metricas = _somar_metricas(leituras, provedor, sha_curto(instrucoes), inicio)
+    origem = ", ".join(entrada.nome for entrada in entradas)
+    lidos = [leitura.cardapio for leitura in leituras if leitura.cardapio is not None]
+    if not lidos:
+        erro = next(leitura.erro for leitura in leituras if leitura.erro is not None)
+        _registrar(origem, metricas, config, erro=erro)
+        raise erro
+    cardapio = unir_cardapios(lidos)
     resultado = ResultadoExtracao(
         cardapio=cardapio,
         revisao=itens_para_revisao(cardapio, config.limiar_confianca),
-        metricas=consumo.metricas(),
+        metricas=metricas,
+        avisos=_avisos(leituras),
     )
-    _registrar(origem, resultado.metricas, config, resultado=resultado)
+    _registrar(origem, metricas, config, resultado=resultado)
     return resultado
 
 
-def _chamar_com_correcoes(
-    instrucoes: str, midias: Sequence[Midia], consumo: _Consumo, max_correcoes: int
-) -> ExtracaoCardapio:
-    schema = schema_para_llm(ExtracaoCardapio)
-    modelo_correcao = carregar_prompt("correcao.md")
-    correcoes: list[Correcao] = []
-    for _ in range(max_correcoes + 1):
-        resposta = consumo.provedor.gerar_json(
-            instrucoes=instrucoes, midias=midias, schema=schema, correcoes=correcoes
+def _ler_em_paralelo(
+    entradas: Sequence[Entrada], instrucoes: str, provedor: ProvedorLLM, config: Config
+) -> list[_Leitura]:
+    with ThreadPoolExecutor(
+        max_workers=min(len(entradas), config.max_chamadas_paralelas)
+    ) as executor:
+        return list(
+            executor.map(lambda entrada: _ler(entrada, instrucoes, provedor, config), entradas)
         )
-        consumo.registrar(resposta)
-        try:
-            return ExtracaoCardapio.model_validate_json(resposta.texto)
-        except ValidationError as erro:
-            mensagem = modelo_correcao.replace("{erros}", formatar_erros(erro))
-            correcoes.append(Correcao(resposta.texto, mensagem))
-    raise ExtracaoInvalidaErro(
-        f"JSON inválido após {consumo.tentativas} tentativas:\n{correcoes[-1].mensagem_erro}",
-        consumo.metricas(),
+
+
+def _ler(entrada: Entrada, instrucoes: str, provedor: ProvedorLLM, config: Config) -> _Leitura:
+    consumo = Consumo(provedor, sha_curto(instrucoes))
+    try:
+        cardapio = chamar_validando(
+            ExtracaoCardapio, instrucoes, [entrada.midia], consumo, config.max_correcoes
+        )
+    except (ProvedorErro, RespostaInvalidaErro) as erro:
+        return _Leitura(entrada.nome, consumo.metricas(), erro=erro)
+    return _Leitura(entrada.nome, consumo.metricas(), cardapio=cardapio)
+
+
+def _somar_metricas(
+    leituras: Sequence[_Leitura], provedor: ProvedorLLM, prompt_sha: str, inicio: float
+) -> MetricasLLM:
+    """Tokens somados entre os arquivos; o tempo é o decorrido, porque as chamadas são paralelas."""
+    tokens_entrada = sum(leitura.metricas.tokens_entrada for leitura in leituras)
+    tokens_saida = sum(leitura.metricas.tokens_saida for leitura in leituras)
+    custo: Decimal | None = calcular_custo(provedor.modelo, tokens_entrada, tokens_saida)
+    return MetricasLLM(
+        provedor=provedor.nome,
+        modelo=provedor.modelo,
+        prompt_sha=prompt_sha,
+        tokens_entrada=tokens_entrada,
+        tokens_saida=tokens_saida,
+        custo_estimado_usd=custo,
+        tempo_s=round(time.perf_counter() - inicio, 2),
+        tentativas=sum(leitura.metricas.tentativas for leitura in leituras),
+        arquivos=[_metricas_do_arquivo(leitura) for leitura in leituras],
     )
+
+
+def _metricas_do_arquivo(leitura: _Leitura) -> MetricasArquivo:
+    metricas = leitura.metricas
+    return MetricasArquivo(
+        nome=leitura.nome,
+        itens=leitura.cardapio.total_itens() if leitura.cardapio else 0,
+        tokens_entrada=metricas.tokens_entrada,
+        tokens_saida=metricas.tokens_saida,
+        custo_estimado_usd=metricas.custo_estimado_usd,
+        tempo_s=metricas.tempo_s,
+        tentativas=metricas.tentativas,
+        erro=_primeira_linha(leitura.erro),
+    )
+
+
+def _avisos(leituras: Sequence[_Leitura]) -> list[str]:
+    """Nunca descarta um arquivo em silêncio: o dono precisa saber o que ficou de fora."""
+    avisos: list[str] = []
+    for leitura in leituras:
+        if leitura.erro is not None:
+            avisos.append(
+                f"{leitura.nome}: não foi possível ler, e os itens desse arquivo não estão "
+                f"na tabela. {_primeira_linha(leitura.erro)}"
+            )
+        elif len(leituras) > 1 and leitura.cardapio and leitura.cardapio.total_itens() == 0:
+            avisos.append(f"{leitura.nome}: nenhum item encontrado nesse arquivo.")
+    return avisos
+
+
+def _primeira_linha(erro: Exception | None) -> str | None:
+    return str(erro).splitlines()[0] if erro is not None else None
 
 
 def _registrar(
     origem: str,
-    metricas: MetricasExtracao,
+    metricas: MetricasLLM,
     config: Config,
     resultado: ResultadoExtracao | None = None,
     erro: Exception | None = None,
 ) -> None:
-    evento: dict[str, Any] = {"origem": origem, **metricas.model_dump(mode="json")}
+    evento: dict[str, Any] = {
+        "tipo": "extracao",
+        "origem": origem,
+        **metricas.model_dump(mode="json"),
+    }
     if resultado is not None:
         evento["n_itens"] = resultado.cardapio.total_itens()
         evento["n_revisao"] = len(resultado.revisao)
+        evento["n_avisos"] = len(resultado.avisos)
     evento["sucesso"] = erro is None
     if erro is not None:
         evento["erro"] = f"{type(erro).__name__}: {erro}"

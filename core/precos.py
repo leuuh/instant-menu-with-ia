@@ -28,6 +28,10 @@ TABELA: TabelaPrecos = {
         PrecoModelo(date.min, Decimal("0.75"), Decimal("3.75")),
         PrecoModelo(date(2027, 1, 1), Decimal("1.50"), Decimal("7.50")),
     ),
+    "gemini-3.6-flash": (
+        PrecoModelo(date.min, Decimal("0.75"), Decimal("3.75")),
+        PrecoModelo(date(2027, 1, 1), Decimal("1.50"), Decimal("7.50")),
+    ),
     "gemini-3.5-flash-lite": (PrecoModelo(date.min, Decimal("0.30"), Decimal("2.50")),),
 }
 

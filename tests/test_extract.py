@@ -1,14 +1,18 @@
 import json
+import threading
+from collections.abc import Callable, Sequence
 from pathlib import Path
 from typing import Any
 
 import pytest
 from PIL import Image
 
+from core.arquivos import Entrada
+from core.chamada import RespostaInvalidaErro
 from core.config import Config
-from core.extract import ExtracaoInvalidaErro, extrair_cardapio
+from core.extract import extrair_cardapio, extrair_entradas
 from core.precos import calcular_custo
-from core.providers.base import ProvedorErro
+from core.providers.base import Midia, ProvedorErro
 from core.providers.fake import ProvedorFake
 from core.registro import ARQUIVO_LOG
 
@@ -73,7 +77,7 @@ def test_texto_fora_do_json_gera_correcao(foto: Path, config: Config, json_valid
 
 def test_falha_apos_duas_correcoes(foto: Path, config: Config) -> None:
     provedor = ProvedorFake([JSON_INCOMPLETO] * 3)
-    with pytest.raises(ExtracaoInvalidaErro) as excinfo:
+    with pytest.raises(RespostaInvalidaErro) as excinfo:
         extrair_cardapio(foto, provedor, config)
 
     assert excinfo.value.metricas.tentativas == 3
@@ -81,13 +85,13 @@ def test_falha_apos_duas_correcoes(foto: Path, config: Config) -> None:
     assert len(provedor.chamadas[2].correcoes) == 2
     log = _linhas_log(config)[-1]
     assert log["sucesso"] is False
-    assert log["erro"].startswith("ExtracaoInvalidaErro")
+    assert log["erro"].startswith("RespostaInvalidaErro")
 
 
 def test_max_correcoes_zero_faz_uma_chamada(foto: Path, config: Config) -> None:
     config = config.model_copy(update={"max_correcoes": 0})
     provedor = ProvedorFake([JSON_INCOMPLETO])
-    with pytest.raises(ExtracaoInvalidaErro):
+    with pytest.raises(RespostaInvalidaErro):
         extrair_cardapio(foto, provedor, config)
     assert len(provedor.chamadas) == 1
 
@@ -127,3 +131,149 @@ def test_erro_do_provedor_e_registrado_e_propagado(foto: Path, config: Config) -
     with pytest.raises(ProvedorErro):
         extrair_cardapio(foto, ProvedorFake([]), config)
     assert _linhas_log(config)[-1]["sucesso"] is False
+
+
+def _entrada(nome: str) -> Entrada:
+    return Entrada(nome, Midia(dados=nome.encode(), mime="image/jpeg"))
+
+
+def _json_com_itens(*itens: tuple[str, float]) -> str:
+    return json.dumps(
+        {
+            "info_restaurante": {"nome": None, "telefone": None, "horario": None},
+            "categorias": [
+                {
+                    "nome": "Lanches",
+                    "categoria_inferida": False,
+                    "itens": [
+                        {
+                            "nome": nome,
+                            "descricao_original": None,
+                            "preco": preco,
+                            "variacoes": [],
+                            "adicionais": [],
+                            "alergenicos_provaveis": [],
+                            "confianca": 0.95,
+                            "observacao": None,
+                        }
+                        for nome, preco in itens
+                    ],
+                }
+            ],
+        }
+    )
+
+
+def _responder_por_arquivo(
+    respostas: dict[str, str | Exception],
+) -> Callable[[Sequence[Midia]], str]:
+    def responder(midias: Sequence[Midia]) -> str:
+        resposta = respostas[midias[0].dados.decode()]
+        if isinstance(resposta, Exception):
+            raise resposta
+        return resposta
+
+    return responder
+
+
+def test_varias_fotos_sao_lidas_uma_a_uma_e_unidas(config: Config) -> None:
+    provedor = ProvedorFake(
+        responder=_responder_por_arquivo(
+            {
+                "a.jpg": _json_com_itens(("X-Tudo", 20.0), ("Misto", 12.0)),
+                "b.jpg": _json_com_itens(("Misto", 12.0), ("Suco", 9.0)),
+            }
+        )
+    )
+    resultado = extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config)
+
+    assert [i.nome for i in resultado.cardapio.categorias[0].itens] == ["X-Tudo", "Misto", "Suco"]
+    assert len(provedor.chamadas) == 2
+    assert all(len(chamada.midias) == 1 for chamada in provedor.chamadas)
+    assert resultado.avisos == []
+
+
+def test_metricas_somam_e_detalham_cada_arquivo(config: Config) -> None:
+    provedor = ProvedorFake(
+        modelo="gemini-3.5-flash-lite",
+        responder=_responder_por_arquivo(
+            {"a.jpg": _json_com_itens(("X-Tudo", 20.0)), "b.jpg": _json_com_itens(("Suco", 9.0))}
+        ),
+    )
+    metricas = extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config).metricas
+
+    assert (metricas.tokens_entrada, metricas.tokens_saida, metricas.tentativas) == (2000, 1000, 2)
+    assert metricas.custo_estimado_usd == calcular_custo("gemini-3.5-flash-lite", 2000, 1000)
+    assert [(a.nome, a.itens, a.tentativas) for a in metricas.arquivos] == [
+        ("a.jpg", 1, 1),
+        ("b.jpg", 1, 1),
+    ]
+    log = _linhas_log(config)[-1]
+    assert log["origem"] == "a.jpg, b.jpg"
+    assert log["tipo"] == "extracao"
+    assert len(log["arquivos"]) == 2
+
+
+def test_arquivo_que_falha_vira_aviso_e_nao_derruba_os_outros(config: Config) -> None:
+    provedor = ProvedorFake(
+        responder=_responder_por_arquivo(
+            {"a.jpg": _json_com_itens(("X-Tudo", 20.0)), "b.jpg": ProvedorErro("cota esgotada")}
+        )
+    )
+    resultado = extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config)
+
+    assert resultado.cardapio.total_itens() == 1
+    assert "b.jpg: não foi possível ler" in resultado.avisos[0]
+    assert "cota esgotada" in resultado.avisos[0]
+    assert resultado.metricas.arquivos[1].erro == "cota esgotada"
+    log = _linhas_log(config)[-1]
+    assert (log["sucesso"], log["n_avisos"]) == (True, 1)
+
+
+def test_todos_os_arquivos_falham(config: Config) -> None:
+    provedor = ProvedorFake(
+        responder=_responder_por_arquivo(
+            {"a.jpg": ProvedorErro("cota esgotada"), "b.jpg": ProvedorErro("outro erro")}
+        )
+    )
+    with pytest.raises(ProvedorErro, match="cota esgotada"):
+        extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config)
+    assert _linhas_log(config)[-1]["sucesso"] is False
+
+
+def test_foto_sem_itens_gera_aviso_quando_ha_outras(config: Config) -> None:
+    provedor = ProvedorFake(
+        responder=_responder_por_arquivo(
+            {"a.jpg": _json_com_itens(("X-Tudo", 20.0)), "b.jpg": _json_com_itens()}
+        )
+    )
+    resultado = extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config)
+    assert resultado.avisos == ["b.jpg: nenhum item encontrado nesse arquivo."]
+
+
+def test_arquivos_sao_lidos_em_paralelo(config: Config) -> None:
+    barreira = threading.Barrier(2, timeout=10)
+
+    def responder(_midias: Sequence[Midia]) -> str:
+        barreira.wait()  # só passa se as duas chamadas estiverem acontecendo ao mesmo tempo
+        return _json_com_itens(("X-Tudo", 20.0))
+
+    provedor = ProvedorFake(responder=responder)
+    resultado = extrair_entradas([_entrada("a.jpg"), _entrada("b.jpg")], provedor, config)
+    assert resultado.cardapio.total_itens() == 1
+
+
+def test_limite_de_chamadas_paralelas(config: Config) -> None:
+    config = config.model_copy(update={"max_chamadas_paralelas": 1})
+    ordem: list[str] = []
+
+    def responder(midias: Sequence[Midia]) -> str:
+        ordem.append(midias[0].dados.decode())
+        return _json_com_itens(("X-Tudo", 20.0))
+
+    extrair_entradas(
+        [_entrada("a.jpg"), _entrada("b.jpg"), _entrada("c.jpg")],
+        ProvedorFake(responder=responder),
+        config,
+    )
+    assert ordem == ["a.jpg", "b.jpg", "c.jpg"]

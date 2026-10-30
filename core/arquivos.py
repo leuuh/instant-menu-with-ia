@@ -1,6 +1,8 @@
 """Validação e preparo dos arquivos enviados (imagem ou PDF) antes de ir ao LLM."""
 
 import io
+from collections.abc import Sequence
+from dataclasses import dataclass
 from pathlib import Path
 
 from PIL import Image, ImageOps
@@ -11,19 +13,54 @@ FORMATOS_ACEITOS = {"JPEG", "PNG"}
 QUALIDADE_JPEG = 90
 ASSINATURA_PDF = b"%PDF-"
 MAX_BYTES_PDF = 50 * 1024 * 1024  # limite do Gemini para PDF
+MAX_IMAGENS = 5
 
 
 class ArquivoInvalidoErro(ValueError):
     """Arquivo ausente, corrompido ou em formato não aceito."""
 
 
+@dataclass(frozen=True)
+class Entrada:
+    """Arquivo pronto para o LLM, com o nome usado nas mensagens e métricas."""
+
+    nome: str
+    midia: Midia
+
+
 def carregar_arquivo(caminho: Path, max_lado: int) -> Midia:
-    """Lê o arquivo do disco e o prepara para envio."""
+    """Lê um arquivo do disco e o prepara para envio."""
+    return preparar_arquivo(_ler_bytes(caminho), caminho.name, max_lado)
+
+
+def carregar_arquivos(caminhos: Sequence[Path], max_lado: int) -> list[Entrada]:
+    """Lê vários arquivos do disco e os prepara para envio."""
+    return preparar_arquivos([(c.name, _ler_bytes(c)) for c in caminhos], max_lado)
+
+
+def preparar_arquivos(arquivos: Sequence[tuple[str, bytes]], max_lado: int) -> list[Entrada]:
+    """Aceita de 1 a 5 imagens ou 1 PDF; qualquer arquivo inválido recusa a seleção inteira."""
+    _validar_selecao(arquivos)
+    return [Entrada(nome, preparar_arquivo(dados, nome, max_lado)) for nome, dados in arquivos]
+
+
+def _validar_selecao(arquivos: Sequence[tuple[str, bytes]]) -> None:
+    if not arquivos:
+        raise ArquivoInvalidoErro("Envie pelo menos um arquivo.")
+    tem_pdf = any(dados.startswith(ASSINATURA_PDF) for _, dados in arquivos)
+    if tem_pdf and len(arquivos) > 1:
+        raise ArquivoInvalidoErro("Envie 1 PDF ou até 5 imagens, sem misturar os dois.")
+    if len(arquivos) > MAX_IMAGENS:
+        raise ArquivoInvalidoErro(
+            f"Envie no máximo {MAX_IMAGENS} imagens de cada vez ({len(arquivos)} selecionadas)."
+        )
+
+
+def _ler_bytes(caminho: Path) -> bytes:
     try:
-        dados = caminho.read_bytes()
+        return caminho.read_bytes()
     except OSError as erro:
         raise ArquivoInvalidoErro(f"Arquivo não encontrado ou inacessível: {caminho}") from erro
-    return preparar_arquivo(dados, caminho.name, max_lado)
 
 
 def preparar_arquivo(dados: bytes, nome: str, max_lado: int) -> Midia:

@@ -6,9 +6,11 @@ from PIL import Image
 
 from core.arquivos import (
     MAX_BYTES_PDF,
+    MAX_IMAGENS,
     ArquivoInvalidoErro,
     carregar_arquivo,
     preparar_arquivo,
+    preparar_arquivos,
 )
 
 ORIENTACAO_EXIF = 0x0112
@@ -98,3 +100,43 @@ def test_carrega_do_disco(tmp_path: Path) -> None:
 def test_rejeita_arquivo_inexistente(tmp_path: Path) -> None:
     with pytest.raises(ArquivoInvalidoErro, match="não encontrado"):
         carregar_arquivo(tmp_path / "nao_existe.jpg", MAX_LADO)
+
+
+def test_aceita_ate_cinco_imagens() -> None:
+    arquivos = [(f"{n}.png", _bytes_imagem()) for n in range(MAX_IMAGENS)]
+    entradas = preparar_arquivos(arquivos, MAX_LADO)
+    assert [e.nome for e in entradas] == [f"{n}.png" for n in range(MAX_IMAGENS)]
+    assert all(e.midia.mime == "image/jpeg" for e in entradas)
+
+
+def test_recusa_mais_de_cinco_imagens() -> None:
+    arquivos = [(f"{n}.png", b"nem_chega_a_abrir") for n in range(MAX_IMAGENS + 1)]
+    with pytest.raises(ArquivoInvalidoErro, match="no máximo 5"):
+        preparar_arquivos(arquivos, MAX_LADO)
+
+
+def test_aceita_um_pdf_sozinho() -> None:
+    entradas = preparar_arquivos([("menu.pdf", b"%PDF-1.7")], MAX_LADO)
+    assert entradas[0].midia.mime == "application/pdf"
+
+
+@pytest.mark.parametrize(
+    "arquivos",
+    [
+        [("a.pdf", b"%PDF-1.7"), ("b.pdf", b"%PDF-1.7")],
+        [("a.pdf", b"%PDF-1.7"), ("b.png", b"imagem")],
+    ],
+)
+def test_recusa_mais_de_um_pdf_ou_mistura(arquivos: list[tuple[str, bytes]]) -> None:
+    with pytest.raises(ArquivoInvalidoErro, match="sem misturar"):
+        preparar_arquivos(arquivos, MAX_LADO)
+
+
+def test_recusa_selecao_vazia() -> None:
+    with pytest.raises(ArquivoInvalidoErro, match="pelo menos um"):
+        preparar_arquivos([], MAX_LADO)
+
+
+def test_um_arquivo_ruim_recusa_a_selecao_e_cita_o_nome() -> None:
+    with pytest.raises(ArquivoInvalidoErro, match="ruim.jpg"):
+        preparar_arquivos([("boa.png", _bytes_imagem()), ("ruim.jpg", b"texto")], MAX_LADO)

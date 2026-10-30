@@ -1,7 +1,7 @@
 """Conversão entre o cardápio e as linhas da tabela editável (sem depender da interface)."""
 
 from collections.abc import Iterable, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from decimal import Decimal, InvalidOperation
 from typing import Any
 
@@ -42,12 +42,24 @@ class ErroLinha:
 
 
 @dataclass(frozen=True)
+class DescricaoEscolhida:
+    """Sugestão disponível para um item e a escolha do dono: a original nunca é apagada."""
+
+    sugerida: str
+    usar: bool
+
+
+Descricoes = dict[tuple[str, int], DescricaoEscolhida]  # (categoria, índice do item)
+
+
+@dataclass(frozen=True)
 class CardapioEditado:
     """Resultado de ler a tabela: ou há cardápio, ou há erros a corrigir."""
 
     cardapio: ExtracaoCardapio | None
     pendencias: list[ItemParaRevisao]
     erros: list[ErroLinha]
+    descricoes: Descricoes = field(default_factory=dict)
 
 
 def formatar_preco(preco: Decimal) -> str:
@@ -95,6 +107,7 @@ def aplicar_edicao(
     por_categoria: dict[str, list[ItemExtraido]] = {}
     pendencias: list[ItemParaRevisao] = []
     erros: list[ErroLinha] = []
+    descricoes: Descricoes = {}
     for numero, linha in enumerate(linhas, start=1):
         if _linha_vazia(linha):
             continue
@@ -114,6 +127,11 @@ def aplicar_edicao(
                         categoria=categoria, indice_item=len(itens), nome=item.nome, motivos=motivos
                     )
                 )
+            sugerida = _texto(linha.get("descricao_sugerida"))
+            if sugerida:
+                descricoes[(categoria, len(itens))] = DescricaoEscolhida(
+                    sugerida, bool(linha.get("usar_sugestao"))
+                )
             itens.append(item)
     if erros:
         return CardapioEditado(None, [], erros)
@@ -125,7 +143,7 @@ def aplicar_edicao(
             for nome, itens in por_categoria.items()
         ],
     )
-    return CardapioEditado(cardapio, pendencias, [])
+    return CardapioEditado(cardapio, pendencias, [], descricoes)
 
 
 def _linha_do_item(categoria: str, item: ItemExtraido, limiar_confianca: float) -> Linha:
@@ -138,6 +156,8 @@ def _linha_do_item(categoria: str, item: ItemExtraido, limiar_confianca: float) 
         "variacoes": formatar_opcoes(item.variacoes),
         "adicionais": formatar_opcoes(item.adicionais),
         "descricao": item.descricao_original or "",
+        "descricao_sugerida": "",
+        "usar_sugestao": False,
         "alergenicos": [alergenico.value for alergenico in item.alergenicos_provaveis],
         "confianca": item.confianca,
         "observacao": item.observacao or "",

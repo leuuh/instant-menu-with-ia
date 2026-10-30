@@ -6,7 +6,7 @@ import json
 from collections.abc import Iterator, Sequence
 from decimal import Decimal
 
-from core.edicao import ROTULOS_ALERGENICOS, formatar_opcoes, formatar_preco
+from core.edicao import ROTULOS_ALERGENICOS, Descricoes, formatar_opcoes, formatar_preco
 from core.revisao import rotular_motivos
 from core.schema import ExtracaoCardapio, ItemExtraido, ItemParaRevisao
 
@@ -14,6 +14,7 @@ COLUNAS_CSV = (
     "categoria",
     "item",
     "descricao",
+    "descricao_original",
     "opcao",
     "preco",
     "adicionais",
@@ -26,16 +27,29 @@ COLUNAS_CSV = (
 INICIOS_DE_FORMULA = ("=", "+", "-", "@", "\t", "\r")
 
 
-def exportar_json(cardapio: ExtracaoCardapio, pendencias: Sequence[ItemParaRevisao]) -> bytes:
-    """Mesmo formato do contrato do LLM, mais a lista do que ainda precisa de revisão."""
-    dados = {
-        **cardapio.model_dump(mode="json"),
-        "pendencias_revisao": [p.model_dump(mode="json") for p in pendencias],
-    }
+def exportar_json(
+    cardapio: ExtracaoCardapio,
+    pendencias: Sequence[ItemParaRevisao],
+    descricoes: Descricoes | None = None,
+) -> bytes:
+    """Contrato do LLM, mais a descrição final de cada item e o que ainda precisa de revisão."""
+    dados = cardapio.model_dump(mode="json")
+    for categoria in dados["categorias"]:
+        for indice, item in enumerate(categoria["itens"]):
+            escolhida = (descricoes or {}).get((categoria["nome"], indice))
+            item["descricao_sugerida"] = escolhida.sugerida if escolhida else None
+            item["descricao_final"] = (
+                escolhida.sugerida if escolhida and escolhida.usar else item["descricao_original"]
+            )
+    dados["pendencias_revisao"] = [p.model_dump(mode="json") for p in pendencias]
     return json.dumps(dados, ensure_ascii=False, indent=2).encode("utf-8")
 
 
-def exportar_csv(cardapio: ExtracaoCardapio, pendencias: Sequence[ItemParaRevisao]) -> bytes:
+def exportar_csv(
+    cardapio: ExtracaoCardapio,
+    pendencias: Sequence[ItemParaRevisao],
+    descricoes: Descricoes | None = None,
+) -> bytes:
     """Uma linha por preço, pronto para o Excel em português: ';', vírgula decimal e BOM UTF-8."""
     motivos = {(p.categoria, p.indice_item): rotular_motivos(p.motivos) for p in pendencias}
     buffer = io.StringIO()
@@ -44,8 +58,10 @@ def exportar_csv(cardapio: ExtracaoCardapio, pendencias: Sequence[ItemParaRevisa
     for categoria in cardapio.categorias:
         for indice, item in enumerate(categoria.itens):
             motivo = motivos.get((categoria.nome, indice), "")
+            escolhida = (descricoes or {}).get((categoria.nome, indice))
+            final = escolhida.sugerida if escolhida and escolhida.usar else item.descricao_original
             for opcao, preco in _precos_do_item(item):
-                escritor.writerow(_linha_csv(categoria.nome, item, opcao, preco, motivo))
+                escritor.writerow(_linha_csv(categoria.nome, item, final, opcao, preco, motivo))
     return buffer.getvalue().encode("utf-8-sig")
 
 
@@ -58,11 +74,17 @@ def _precos_do_item(item: ItemExtraido) -> Iterator[tuple[str, Decimal | None]]:
 
 
 def _linha_csv(
-    categoria: str, item: ItemExtraido, opcao: str, preco: Decimal | None, motivo: str
+    categoria: str,
+    item: ItemExtraido,
+    descricao_final: str | None,
+    opcao: str,
+    preco: Decimal | None,
+    motivo: str,
 ) -> list[str]:
     return [
         _celula_segura(categoria),
         _celula_segura(item.nome),
+        _celula_segura(descricao_final or ""),
         _celula_segura(item.descricao_original or ""),
         _celula_segura(opcao),
         formatar_preco(preco) if preco is not None else "",

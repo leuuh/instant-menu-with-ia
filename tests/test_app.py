@@ -1,8 +1,10 @@
 """Interface de ponta a ponta com o AppTest do Streamlit e o provedor fake (sem rede)."""
 
 import io
-from collections.abc import Callable
+import json
+from collections.abc import Callable, Sequence
 from pathlib import Path
+from typing import Any
 
 import pytest
 from PIL import Image
@@ -10,7 +12,7 @@ from streamlit.testing.v1 import AppTest
 
 from app import pagina
 from core.config import Config, ConfigErro
-from core.providers.base import ProvedorLLM
+from core.providers.base import Midia, ProvedorErro, ProvedorLLM
 from core.providers.fake import ProvedorFake
 
 SCRIPT = str(Path(__file__).resolve().parents[1] / "streamlit_app.py")
@@ -136,3 +138,179 @@ def test_nova_extracao_troca_a_tabela(
     app.button[0].click().run()
     assert app.session_state[pagina.CHAVE_EXTRACAO].versao == primeira + 1
     assert not app.exception
+
+
+def _foto_com_largura(largura: int) -> bytes:
+    buffer = io.BytesIO()
+    Image.new("RGB", (largura, 600), "white").save(buffer, format="JPEG")
+    return buffer.getvalue()
+
+
+def _json_item(nome: str) -> str:
+    return json.dumps(
+        {
+            "info_restaurante": {"nome": None, "telefone": None, "horario": None},
+            "categorias": [
+                {
+                    "nome": "Lanches",
+                    "categoria_inferida": False,
+                    "itens": [
+                        {
+                            "nome": nome,
+                            "descricao_original": None,
+                            "preco": 10.0,
+                            "variacoes": [],
+                            "adicionais": [],
+                            "alergenicos_provaveis": [],
+                            "confianca": 0.95,
+                            "observacao": None,
+                        }
+                    ],
+                }
+            ],
+        }
+    )
+
+
+def _por_largura(midias: Sequence[Midia]) -> str:
+    largura = Image.open(io.BytesIO(midias[0].dados)).width
+    if largura == 999:
+        raise ProvedorErro("cota esgotada")
+    return _json_item(f"Item {largura}")
+
+
+def _botao(app: AppTest, rotulo: str) -> Any:
+    return next(botao for botao in app.button if botao.label == rotulo)
+
+
+def _enviar_varios(app: AppTest, larguras: Sequence[int]) -> None:
+    arquivos = [(f"{n}.jpg", _foto_com_largura(n), "image/jpeg") for n in larguras]
+    app.file_uploader[0].set_value(arquivos).run()
+    app.button[0].click().run()
+
+
+def test_varias_fotos_viram_uma_tabela(abrir_app: Callable[[CriarProvedor], AppTest]) -> None:
+    provedor = ProvedorFake(responder=_por_largura)
+    app = abrir_app(lambda _config: provedor)
+    _enviar_varios(app, [300, 400])
+
+    assert not app.exception
+    extracao = app.session_state[pagina.CHAVE_EXTRACAO]
+    assert sorted(extracao.tabela["nome"]) == ["Item 300", "Item 400"]
+    assert len(provedor.chamadas) == 2
+
+
+def test_foto_que_falha_aparece_como_aviso(abrir_app: Callable[[CriarProvedor], AppTest]) -> None:
+    app = abrir_app(lambda _config: ProvedorFake(responder=_por_largura))
+    _enviar_varios(app, [300, 999])
+
+    assert not app.exception
+    assert not app.error
+    assert "999.jpg: não foi possível ler" in app.warning[0].value
+    assert list(app.session_state[pagina.CHAVE_EXTRACAO].tabela["nome"]) == ["Item 300"]
+
+
+def test_selecao_acima_do_limite_nao_chama_o_modelo(
+    abrir_app: Callable[[CriarProvedor], AppTest],
+) -> None:
+    provedor = ProvedorFake(responder=_por_largura)
+    app = abrir_app(lambda _config: provedor)
+    _enviar_varios(app, [300, 310, 320, 330, 340, 350])
+
+    assert "no máximo 5" in app.error[0].value
+    assert provedor.chamadas == []
+
+
+def test_painel_mostra_tempo_e_custo(abrir_app: Callable[[CriarProvedor], AppTest]) -> None:
+    provedor = ProvedorFake(modelo="gemini-3.5-flash-lite", responder=_por_largura)
+    app = abrir_app(lambda _config: provedor)
+    _enviar_varios(app, [300, 400])
+
+    metricas = {metrica.label: metrica.value for metrica in app.metric}
+    # 2000 de entrada a US$ 0,30 e 1000 de saída a US$ 2,50 por milhão
+    assert metricas["Custo estimado"] == "US$ 0,0031"
+    assert metricas["Em reais"] == "R$ 0,02"
+    assert metricas["Itens lidos"] == "2"
+    assert metricas["Tempo de processamento"].endswith(" s")
+
+
+def test_painel_sem_preco_cadastrado(abrir_app: Callable[[CriarProvedor], AppTest]) -> None:
+    app = abrir_app(lambda _config: ProvedorFake(responder=_por_largura))
+    _enviar_varios(app, [300])
+    metricas = {metrica.label: metrica.value for metrica in app.metric}
+    assert metricas["Custo estimado"] == "não cadastrado"
+    assert "Em reais" not in metricas
+
+
+def _responder_com_descricoes(midias: Sequence[Midia]) -> str:
+    if midias:
+        return _por_largura(midias)
+    return json.dumps({"descricoes": [{"id": 0, "descricao": "Item 300 para matar a fome"}]})
+
+
+def test_gerar_descricoes_preserva_a_tabela_e_soma_no_painel(
+    abrir_app: Callable[[CriarProvedor], AppTest],
+) -> None:
+    provedor = ProvedorFake(modelo="gemini-3.5-flash-lite", responder=_responder_com_descricoes)
+    app = abrir_app(lambda _config: provedor)
+    _enviar_varios(app, [300])
+    custo_antes = {m.label: m.value for m in app.metric}["Custo estimado"]
+
+    _botao(app, "Gerar descrições sugeridas").click().run()
+
+    assert not app.exception
+    extracao = app.session_state[pagina.CHAVE_EXTRACAO]
+    assert extracao.tabela.loc[0, "descricao_sugerida"] == "Item 300 para matar a fome"
+    assert not extracao.tabela.loc[0, "usar_sugestao"]
+    assert extracao.versao_tabela == 1
+    assert "1 descrição(ões) sugerida(s)" in app.info[0].value
+    assert provedor.chamadas[-1].midias == []
+    assert {m.label: m.value for m in app.metric}["Custo estimado"] != custo_antes
+
+
+def test_descricao_descartada_e_informada(abrir_app: Callable[[CriarProvedor], AppTest]) -> None:
+    def responder(midias: Sequence[Midia]) -> str:
+        if midias:
+            return _por_largura(midias)
+        return json.dumps({"descricoes": [{"id": 0, "descricao": "Com 2 queijos"}]})
+
+    app = abrir_app(lambda _config: ProvedorFake(responder=responder))
+    _enviar_varios(app, [300])
+    _botao(app, "Gerar descrições sugeridas").click().run()
+
+    assert "1 descartada(s)" in app.info[0].value
+    assert app.session_state[pagina.CHAVE_EXTRACAO].tabela.loc[0, "descricao_sugerida"] == ""
+
+
+def test_usar_e_desmarcar_todas_as_sugestoes(
+    abrir_app: Callable[[CriarProvedor], AppTest],
+) -> None:
+    app = abrir_app(lambda _config: ProvedorFake(responder=_responder_com_descricoes))
+    _enviar_varios(app, [300])
+    _botao(app, "Gerar descrições sugeridas").click().run()
+
+    _botao(app, "Usar todas as sugestões").click().run()
+    assert app.session_state[pagina.CHAVE_EXTRACAO].tabela.loc[0, "usar_sugestao"]
+
+    _botao(app, "Manter todas as originais").click().run()
+    assert not app.session_state[pagina.CHAVE_EXTRACAO].tabela.loc[0, "usar_sugestao"]
+    assert not app.exception
+
+
+def test_falha_ao_gerar_descricoes_nao_perde_a_tabela(
+    abrir_app: Callable[[CriarProvedor], AppTest],
+) -> None:
+    def responder(midias: Sequence[Midia]) -> str:
+        if midias:
+            return _por_largura(midias)
+        raise ProvedorErro("cota esgotada")
+
+    app = abrir_app(lambda _config: ProvedorFake(responder=responder))
+    _enviar_varios(app, [300])
+    _botao(app, "Gerar descrições sugeridas").click().run()
+
+    assert not app.exception
+    assert "Não foi possível gerar as descrições" in app.error[0].value
+    extracao = app.session_state[pagina.CHAVE_EXTRACAO]
+    assert list(extracao.tabela["nome"]) == ["Item 300"]
+    assert extracao.tem_sugestoes is False

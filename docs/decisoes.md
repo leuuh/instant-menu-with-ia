@@ -141,3 +141,42 @@ Testei regras para exigir `null` quando faltasse qualquer dígito, limitar a con
 - Comparar `gemini-3.8-flash` com `gemini-3.5-flash-lite` e com outros provedores.
 - Adicionais que valem para uma categoria inteira ("Adicionais: bacon R$ 4,00"): na foto simulada, o `gemini-3.5-flash-lite` os colocou só no último item da categoria. Falta definir a regra.
 - Ao adicionar um provedor cujo SDK instale `httpx2` (como `anthropic` 1.x), conferir se o `google-genai` passa a usá-lo e tratar também `httpx2.HTTPError` em `core/providers/gemini.py`.
+
+## Fase 3 — várias fotos, descrições sugeridas e painel (out/2026)
+
+### 24. Uma chamada por foto, em paralelo, e união em código
+- Cada foto é lida em uma chamada própria (até 3 ao mesmo tempo, em `MAX_CHAMADAS_PARALELAS`), e `core/unir.py` junta os resultados. Assim cada imagem usa a resolução máxima, uma foto ruim não derruba as outras, e a remoção de duplicados é testável.
+- Se uma foto falha, as demais seguem e a tela avisa quais itens ficaram de fora. A extração só falha se nenhuma foto puder ser lida.
+- Teste real: uma foto do Quênia cortada em 2 partes sobrepostas deu 73 itens, igual à foto inteira, sem repetidos (2 execuções). O nome variou em 3 itens (`1/2` e `½`, maiúsculas), sem efeito no preço.
+
+### 25. Remoção de duplicados conservadora
+- Um repetido que escapa fica visível e o dono apaga; dois itens diferentes unidos por engano fariam um preço sumir. Por isso a regra exige a mesma categoria, ou uma categoria apenas deduzida pelo modelo com preço compatível.
+- "Bacon" em Sanduíches e em Sanduíches na chapa continuam separados. "Combo 2 Pessoas" e "Combo 3 Pessoas" nunca se unem.
+- **Foto cortada no meio de um item:** no teste no navegador, a linha de ingredientes da pizza virou um item `Presunto`. Agora, quando o nome é só o começo da descrição e a descrição e os preços são iguais aos de outro item, os dois se unem e fica o nome verdadeiro.
+
+### 26. Fotos que discordam não têm preço escolhido
+- Se duas fotos mostram preços diferentes para o mesmo item, o preço vira `null`, os dois valores vão para a observação e o item entra na revisão. O sistema não escolhe um deles.
+- Isso vale só entre fotos diferentes. Não detecta o mesmo erro repetido nas duas leituras, nem erros de uma foto só.
+
+### 27. Modelo próprio para as descrições
+- Comparei os modelos nos mesmos itens de um cardápio real e do simulado. O `gemini-3.5-flash-lite` empobrecia o texto ("Batatas douradas.") e perdeu acentos, mesmo após dois ajustes de prompt. O `gemini-3.6-flash` manteve os detalhes e os acentos.
+- `LLM_MODEL_DESCRICOES` permite usar modelos diferentes em cada etapa. O custo das descrições sobe cerca de 5 vezes (US$ 0,004 para 0,024 em 40 itens) e o tempo vai de 4 s para 25 s.
+
+### 28. Checagem em código das sugestões
+- O modelo pode desobedecer ao prompt, então `core/enrich.py` descarta a sugestão que acrescenta número, alergênico, promessa ou adjetivo de textura ausente do cardápio, ou que omite um alergênico citado na descrição original. O alergênico é o caso mais grave: o cliente pode ter alergia.
+- **Limitação:** é uma lista de termos, não uma garantia. O `gemini-3.6-flash` escreveu "suco gelado e saboroso, servido em copo" para um item sem descrição, e isso passou. Por isso a sugestão nunca é aplicada sozinha: o dono marca o que usar. Também há falso positivo: "Buttered Bread" com "manteiga" é descartada, porque o nome está em inglês.
+
+### 29. A original nunca é apagada
+- O JSON traz `descricao_original`, `descricao_sugerida` e `descricao_final`. O CSV traz `descricao` (a final) e `descricao_original`.
+- Gerar descrições recria a tabela, preservando edições e marcações. Foi testado no navegador: o preço digitado e o **Conferido** continuaram lá.
+
+### 30. Painel de tempo e custo
+- O painel mostra itens lidos, tempo e custo do cardápio, somando leitura e descrições, com o detalhe por etapa.
+- O tempo da leitura é o decorrido, não a soma, porque as chamadas são paralelas. Não inclui o preparo das imagens no servidor, que é rápido.
+- O valor em reais usa `COTACAO_USD_BRL`, um número fixo configurável (PTAX venda de 30/10/2026: R$ 5,4212), e não uma cotação ao vivo.
+
+### Limitações da Fase 3
+- As descrições foram avaliadas a olho, em poucos cardápios. Falta uma medição na Fase 4.
+- O teste de várias fotos usou cortes de uma mesma foto, não fotos tiradas separadamente.
+- Geração de descrição em um cardápio muito grande não foi testada além de 40 itens.
+- O limite de 3 chamadas paralelas não foi testado contra a cota do nível gratuito com 5 fotos.

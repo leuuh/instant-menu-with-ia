@@ -104,7 +104,22 @@ class ItemParaRevisao(BaseModel):
     motivos: list[MotivoRevisao]
 
 
-class MetricasExtracao(BaseModel):
+class MetricasArquivo(BaseModel):
+    """Consumo da leitura de um arquivo."""
+
+    nome: str
+    itens: int
+    tokens_entrada: int
+    tokens_saida: int
+    custo_estimado_usd: DecimalComoNumero | None
+    tempo_s: float
+    tentativas: int
+    erro: str | None = None
+
+
+class MetricasLLM(BaseModel):
+    """Consumo de uma operação; em ``arquivos``, o detalhe quando há mais de um arquivo."""
+
     provedor: str
     modelo: str
     prompt_sha: str
@@ -113,12 +128,14 @@ class MetricasExtracao(BaseModel):
     custo_estimado_usd: DecimalComoNumero | None  # None = modelo sem preço na tabela
     tempo_s: float
     tentativas: int
+    arquivos: list[MetricasArquivo] = Field(default_factory=list)
 
 
 class ResultadoExtracao(BaseModel):
     cardapio: ExtracaoCardapio
     revisao: list[ItemParaRevisao]
-    metricas: MetricasExtracao
+    metricas: MetricasLLM
+    avisos: list[str] = Field(default_factory=list)  # arquivos que não puderam ser lidos
 
 
 # ---- schema para o LLM ----
