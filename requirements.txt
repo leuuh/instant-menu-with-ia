@@ -1,0 +1,5 @@
+google-genai==2.34.0
+httpx==0.28.1
+pillow==13.0.0
+pydantic==2.14.2
+pydantic-settings==2.16.2

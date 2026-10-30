@@ -1,0 +1,73 @@
+{
+  "info_restaurante": {
+    "nome": "Lanchonete Sabor da Praça",
+    "telefone": "(11) 4000-0000",
+    "horario": "Ter a Dom, 18h às 23h"
+  },
+  "categorias": [
+    {
+      "nome": "Lanches",
+      "categoria_inferida": false,
+      "itens": [
+        {
+          "nome": "X-Burguer",
+          "descricao_original": "Pão, hambúrguer 120g, queijo e maionese da casa",
+          "preco": 32.90,
+          "variacoes": [],
+          "adicionais": [{"nome": "Bacon", "preco": 4.00}],
+          "alergenicos_provaveis": ["gluten", "lactose", "ovo"],
+          "confianca": 0.95,
+          "observacao": null
+        },
+        {
+          "nome": "X-Salada",
+          "descricao_original": null,
+          "preco": null,
+          "variacoes": [],
+          "adicionais": [],
+          "alergenicos_provaveis": ["gluten"],
+          "confianca": 0.55,
+          "observacao": "Preço borrado na foto"
+        }
+      ]
+    },
+    {
+      "nome": "Pizzas",
+      "categoria_inferida": false,
+      "itens": [
+        {
+          "nome": "Calabresa",
+          "descricao_original": "Molho, mussarela, calabresa e cebola",
+          "preco": null,
+          "variacoes": [
+            {"nome": "Média", "preco": 45.00},
+            {"nome": "Grande", "preco": 58.50}
+          ],
+          "adicionais": [{"nome": "Borda recheada", "preco": null}],
+          "alergenicos_provaveis": ["gluten", "lactose"],
+          "confianca": 0.9,
+          "observacao": null
+        }
+      ]
+    },
+    {
+      "nome": "Bebidas",
+      "categoria_inferida": true,
+      "itens": [
+        {
+          "nome": "Suco de laranja",
+          "descricao_original": null,
+          "preco": null,
+          "variacoes": [
+            {"nome": "300ml", "preco": 9.00},
+            {"nome": "500ml", "preco": null}
+          ],
+          "adicionais": [],
+          "alergenicos_provaveis": [],
+          "confianca": 0.8,
+          "observacao": "Preço do 500ml cortado na foto"
+        }
+      ]
+    }
+  ]
+}

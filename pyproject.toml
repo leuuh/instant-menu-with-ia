@@ -1,0 +1,22 @@
+[project]
+name = "cardapio-instantaneo"
+version = "0.1.0"
+description = "Transforma fotos de cardápios físicos em cardápios digitais estruturados usando LLM multimodal."
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = '-m "not live"'
+markers = ["live: chama a API real do LLM (requer chave no .env e gera custo)"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
