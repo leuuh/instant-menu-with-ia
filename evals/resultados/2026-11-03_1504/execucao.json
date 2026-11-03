@@ -1,0 +1,9 @@
+{
+  "data": "2026-11-03T15:04",
+  "modelos": [
+    "gemini-3.5-flash-lite",
+    "gemini-3.6-flash"
+  ],
+  "repeticoes": 3,
+  "limiar_confianca": 0.9
+}

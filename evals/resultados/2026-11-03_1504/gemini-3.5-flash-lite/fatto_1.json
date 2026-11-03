@@ -1,0 +1,222 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": "Fatto A Mano Pizzeria",
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Sobremesas",
+        "categoria_inferida": true,
+        "itens": [
+          {
+            "nome": "FATTO TIRAMISU",
+            "descricao_original": "Coffee liqueur-soaked sponge, mascarpone, chocolate",
+            "preco": 7.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "SCUGNIZIELLI NUTELLA & GELATO",
+            "descricao_original": "Fried mini pizza doughnuts, Nutella, vanilla gelato",
+            "preco": 7.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "amendoim",
+              "castanhas",
+              "soja"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "AFFOGATO",
+            "descricao_original": "Vanilla gelato, espresso",
+            "preco": 6.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "AFFOGATO LIMONCELLO",
+            "descricao_original": "Lemon sorbet, limoncello",
+            "preco": 7.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "GELATO SANDWICH",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "LEMON MERINGUE",
+            "descricao_original": "Vanilla biscuit filled with vanilla gelato, lemon curd & meringue",
+            "preco": 7.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "CHOCOLATE SALTED CARAMEL",
+            "descricao_original": "Chocolate dipped biscuit filled with salted caramel gelato",
+            "preco": 7.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "CHOCOLATE ORANGE",
+            "descricao_original": "Chocolate biscuit filled with chocolate orange gelato",
+            "preco": 7.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "DIGESTIVO",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "LIMONCELLO",
+            "descricao_original": "35ml",
+            "preco": 4.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "CREMA DI PISTACHIO",
+            "descricao_original": "35ml",
+            "preco": 4.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "castanhas",
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "AMARO DEL CAPO",
+            "descricao_original": "35ml",
+            "preco": 4.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "MELONCELLO",
+            "descricao_original": "35ml",
+            "preco": 4.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "COFFEE",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "ESPRESSO",
+            "descricao_original": null,
+            "preco": 2.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "MACCHIATO",
+            "descricao_original": null,
+            "preco": 2.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2941,
+    "tokens_saida": 1516,
+    "custo_estimado_usd": 0.004672,
+    "tempo_s": 29.08,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "fatto.jpg",
+        "itens": 13,
+        "tokens_entrada": 2941,
+        "tokens_saida": 1516,
+        "custo_estimado_usd": 0.004672,
+        "tempo_s": 29.08,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

@@ -1,0 +1,841 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": "Buffalo",
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Buffalo Hot Beverages",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Tea Cup",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "African Tea",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Black Tea",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Lemon Tea",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "White Coffee",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Black Coffee",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "White Milo",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "White Chocolate",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Uji Mug",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Milk",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Lemon Water",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Cold Drinks",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Soda 500ml",
+            "descricao_original": null,
+            "preco": 60.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Soda 300ml",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Mineral Water 1 ltr",
+            "descricao_original": null,
+            "preco": 80.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Mineral water 500 ml",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Blended Fruit Juice",
+            "descricao_original": null,
+            "preco": 60.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Novida",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Snacks",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Ndazi",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Doughnut",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Samosa",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Sausages",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chapati",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Fried Egg Kienyeji",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Spanish omelet (2 eggs)",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Kebab",
+            "descricao_original": null,
+            "preco": 60.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Toast Mix",
+            "descricao_original": null,
+            "preco": 40.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Toast Plain",
+            "descricao_original": null,
+            "preco": 20.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Toast Blueband",
+            "descricao_original": null,
+            "preco": 30.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Fruit Pudding",
+            "descricao_original": null,
+            "preco": 50.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Buffalo Special Breakfast",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Special Samosa",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Special sausage",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Special Kebab",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Special egg",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Buffalo Main Dishes",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Githeri plain",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Githeri Greens",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Ugali Sukuma/manage/ Terere",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Beef Plain",
+            "descricao_original": null,
+            "preco": 180.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Ugali Beef",
+            "descricao_original": null,
+            "preco": 220.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Githeri Special (beef greens)",
+            "descricao_original": null,
+            "preco": 190.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke Beans, Greens, chapatti",
+            "descricao_original": null,
+            "preco": 180.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke Beef Chapati greens",
+            "descricao_original": null,
+            "preco": 250.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke Rice Greens",
+            "descricao_original": null,
+            "preco": 180.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke greens",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke beef",
+            "descricao_original": null,
+            "preco": 220.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chapati Minji",
+            "descricao_original": null,
+            "preco": 150.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Rice Minji",
+            "descricao_original": null,
+            "preco": 150.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matoke Minji",
+            "descricao_original": null,
+            "preco": 150.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "1/2 Lunch Chapati/Ugali/Rice//Matoke",
+            "descricao_original": null,
+            "preco": 180.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "1/2 Lunch Pilau / Nduma",
+            "descricao_original": null,
+            "preco": 200.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Mukimo plain",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Mukimo Greens",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Mukimo, Beef, Greens",
+            "descricao_original": null,
+            "preco": 220.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matumbo Ugali Greens",
+            "descricao_original": null,
+            "preco": 170.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Matumbo Chapati Greens",
+            "descricao_original": null,
+            "preco": 170.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Rice Greens",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Rice Beef Greens",
+            "descricao_original": null,
+            "preco": 220.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Rice Njahi Greens",
+            "descricao_original": null,
+            "preco": 190.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Pilau Plain",
+            "descricao_original": null,
+            "preco": 100.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Pilau Greens",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Pilau Beef",
+            "descricao_original": null,
+            "preco": 220.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.9,
+            "observacao": "Preço parcialmente cortado, mas visível como 220"
+          },
+          {
+            "nome": "Nduma Greens",
+            "descricao_original": null,
+            "preco": 150.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.9,
+            "observacao": "Preço parcialmente cortado"
+          },
+          {
+            "nome": "Nduma Minji",
+            "descricao_original": null,
+            "preco": 170.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.9,
+            "observacao": "Preço parcialmente cortado"
+          },
+          {
+            "nome": "Chips plain",
+            "descricao_original": null,
+            "preco": 120.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Sausage",
+            "descricao_original": null,
+            "preco": 160.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Samosa",
+            "descricao_original": null,
+            "preco": 160.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Vegetables",
+            "descricao_original": null,
+            "preco": 170.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips & Quarter Chicken",
+            "descricao_original": null,
+            "preco": 320.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Beef Stew",
+            "descricao_original": null,
+            "preco": 270.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Beef fry",
+            "descricao_original": null,
+            "preco": 290.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Masala",
+            "descricao_original": null,
+            "preco": 200.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Chips Kebab",
+            "descricao_original": null,
+            "preco": 180.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Quarter plain",
+            "descricao_original": null,
+            "preco": 200.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Quarter Stew",
+            "descricao_original": null,
+            "preco": 250.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2941,
+    "tokens_saida": 6518,
+    "custo_estimado_usd": 0.017177,
+    "tempo_s": 35.99,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "kenya.jpg",
+        "itens": 73,
+        "tokens_entrada": 2941,
+        "tokens_saida": 6518,
+        "custo_estimado_usd": 0.017177,
+        "tempo_s": 35.99,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

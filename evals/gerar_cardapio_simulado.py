@@ -303,13 +303,11 @@ def _efeitos_de_camera(cena: Image.Image) -> Image.Image:
 
 def _item_gabarito(item: Item, categoria: Categoria) -> dict[str, Any]:
     return {
+        "categoria": categoria.nome,
         "nome": item.nome,
-        "descricao_original": item.descricao,
         "preco": None if item.obstaculo else _numero(item.preco),
         "variacoes": [{"nome": n, "preco": _numero(p)} for n, p in item.variacoes],
-        "adicionais": [{"nome": n, "preco": _numero(p)} for n, p in categoria.adicionais],
-        "obstaculo": item.obstaculo,
-        "preco_antigo_riscado": _numero(item.preco_riscado),
+        "ilegivel": item.obstaculo is not None,
     }
 
 
@@ -318,14 +316,18 @@ def _numero(preco: str | None) -> float | None:
 
 
 def gabarito() -> dict[str, Any]:
-    """O que deve ser extraído. Preço coberto por mancha ou dobra é null."""
+    """O que deve ser extraído. Preço coberto por mancha ou dobra é ilegível: o certo é null."""
     categorias = [*COLUNA_ESQUERDA, *COLUNA_DIREITA]
     return {
-        "origem": "simulada (imagem desenhada, não é foto real)",
-        "info_restaurante": INFO,
-        "categorias": [
-            {"nome": c.nome, "itens": [_item_gabarito(i, c) for i in c.itens]} for c in categorias
-        ],
+        "cardapio": "simulado_01",
+        "tipo": "exato",
+        "arquivo": f"evals/data/{NOME_BASE}.jpg",
+        "licenca": "própria",
+        "conferencia": (
+            "Gabarito exato: a imagem foi desenhada a partir dele "
+            "(evals/gerar_cardapio_simulado.py)."
+        ),
+        "itens": [_item_gabarito(i, c) for c in categorias for i in c.itens],
     }
 
 
@@ -337,7 +339,9 @@ def main() -> None:
     foto.transpose(Image.Transpose.ROTATE_90).save(
         DIR_SAIDA / f"{NOME_BASE}.jpg", quality=78, exif=exif
     )
-    (DIR_SAIDA / f"{NOME_BASE}.json").write_text(
+    destino = DIR_SAIDA / "gabaritos" / "simulado_01.json"
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_text(
         json.dumps(gabarito(), ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
 

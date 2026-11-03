@@ -43,8 +43,8 @@ Gera uma tabela em markdown para colar no README e permite comparar 2 ou mais mo
 |---|---|---|
 | 1 | Schema Pydantic, camada de provedor e extração de uma imagem pela linha de comando, com testes | Concluída |
 | 2 | Interface Streamlit com upload, tabela editável e exportação | Concluída |
-| 3 | Descrições sugeridas, múltiplas imagens e painel de custo/tempo | Implementada no branch `fase-3`, aguardando revisão |
-| 4 | Script de avaliação e comparação entre modelos | A fazer |
+| 3 | Descrições sugeridas, múltiplas imagens e painel de custo/tempo | Concluída |
+| 4 | Script de avaliação e comparação entre modelos | Implementada no branch `fase-4`, aguardando revisão |
 | 5 | CI, deploy e README com problema, demo, resultados, arquitetura, decisões técnicas e instruções de instalação | A fazer |
 
 As decisões tomadas, os resultados medidos e as limitações conhecidas estão em [decisoes.md](decisoes.md).

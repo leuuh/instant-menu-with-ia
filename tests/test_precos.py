@@ -2,6 +2,7 @@ from datetime import date
 from decimal import Decimal
 
 from core.precos import PrecoModelo, calcular_custo, preco_vigente
+from core.providers.gemini import ProvedorGemini
 
 TABELA_TESTE = {
     "modelo-x": (
@@ -31,4 +32,4 @@ def test_modelo_sem_preco_devolve_none() -> None:
 
 
 def test_tabela_real_tem_o_modelo_padrao() -> None:
-    assert preco_vigente("gemini-3.8-flash", date(2026, 10, 29)) is not None
+    assert preco_vigente(ProvedorGemini.modelo_padrao, date(2026, 10, 29)) is not None

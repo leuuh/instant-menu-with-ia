@@ -1,0 +1,145 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": "Unithai's",
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Especiais da Casa",
+        "categoria_inferida": true,
+        "itens": [
+          {
+            "nome": "Unithai's Amazing fried rice",
+            "descricao_original": "with chickens and prawns topped with a fried egg \"Medium Hot\"",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo",
+              "frutos_do_mar"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "RICE NOODLE CLEAR SOUP WITH CHICKEN",
+            "descricao_original": null,
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "STIR FRIED UDON GREEN CURRY (FRESH UDON NOODLE)",
+            "descricao_original": null,
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN/ PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "\"SUKIYAKI\" GREEN BEANS NOODLE SOUP",
+            "descricao_original": "(MEDIUM HOT) PORK, SEAFOOD & VEGETABLES",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "frutos_do_mar"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "\"MEE HOT\" (SPICY)",
+            "descricao_original": "NOODLE WITH GREEN BEANS & ONIONS",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN/ PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "ROASTED DUCK CURRY",
+            "descricao_original": "ROASTED DUCK COOKED IN MEDIUM RED CURRY PASTE WITH PINEAPPLE, TOMATO & LIME LEAVES",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "PAD KEE MAO DRUNKEN NOODLES",
+            "descricao_original": null,
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN/ PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.6-flash",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2941,
+    "tokens_saida": 2730,
+    "custo_estimado_usd": 0.012443,
+    "tempo_s": 33.66,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "unithai.jpg",
+        "itens": 7,
+        "tokens_entrada": 2941,
+        "tokens_saida": 2730,
+        "custo_estimado_usd": 0.012443,
+        "tempo_s": 33.66,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

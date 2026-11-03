@@ -1,0 +1,122 @@
+{
+  "cardapio": "simulado_01",
+  "tipo": "exato",
+  "arquivo": "evals/data/cardapio_simulado_01.jpg",
+  "licenca": "própria",
+  "conferencia": "Gabarito exato: a imagem foi desenhada a partir dele (evals/gerar_cardapio_simulado.py).",
+  "itens": [
+    {
+      "categoria": "ENTRADAS",
+      "nome": "Porção de batata frita",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "P",
+          "preco": 18.0
+        },
+        {
+          "nome": "G",
+          "preco": 29.9
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "ENTRADAS",
+      "nome": "Bolinho de bacalhau (6 un.)",
+      "preco": 34.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "ENTRADAS",
+      "nome": "Pastel de queijo",
+      "preco": 9.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "LANCHES",
+      "nome": "X-Tudo",
+      "preco": 27.9,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "LANCHES",
+      "nome": "X-Frango",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "LANCHES",
+      "nome": "Misto quente",
+      "preco": 12.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "PIZZAS",
+      "nome": "Portuguesa",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "Meia",
+          "preco": 32.0
+        },
+        {
+          "nome": "Inteira",
+          "preco": 58.0
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "PIZZAS",
+      "nome": "Quatro queijos",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "Meia",
+          "preco": 34.0
+        },
+        {
+          "nome": "Inteira",
+          "preco": 62.0
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BEBIDAS",
+      "nome": "Refrigerante lata",
+      "preco": 6.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BEBIDAS",
+      "nome": "Suco natural",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "300ml",
+          "preco": 9.0
+        },
+        {
+          "nome": "500ml",
+          "preco": 14.0
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BEBIDAS",
+      "nome": "Água com gás",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    }
+  ]
+}

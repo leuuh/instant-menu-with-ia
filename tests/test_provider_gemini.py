@@ -87,7 +87,7 @@ def test_monta_requisicao_com_midia_instrucoes_e_schema() -> None:
     provedor.gerar_json(instrucoes="extraia", midias=[MIDIA], schema=SCHEMA)
 
     chamada = _chamada(provedor)
-    assert chamada["model"] == "gemini-3.8-flash"
+    assert chamada["model"] == ProvedorGemini.modelo_padrao
     assert chamada["config"].response_mime_type == "application/json"
     assert chamada["config"].response_json_schema == SCHEMA
     (turno,) = chamada["contents"]
@@ -122,13 +122,13 @@ def test_le_texto_e_soma_tokens_de_raciocinio_na_saida() -> None:
     resposta = _provedor(_resposta()).gerar_json(instrucoes="x", midias=[MIDIA], schema=SCHEMA)
     assert resposta.texto == '{"ok": true}'
     assert (resposta.tokens_entrada, resposta.tokens_saida) == (1200, 450)
-    assert resposta.modelo == "gemini-3.8-flash"
+    assert resposta.modelo == ProvedorGemini.modelo_padrao
 
 
 def test_modelo_configuravel() -> None:
-    provedor = ProvedorGemini("gemini-3.5-flash-lite", cliente=_ClienteFalso(_resposta()))  # type: ignore[arg-type]
+    provedor = ProvedorGemini("gemini-3.6-flash", cliente=_ClienteFalso(_resposta()))  # type: ignore[arg-type]
     provedor.gerar_json(instrucoes="x", midias=[MIDIA], schema=SCHEMA)
-    assert _chamada(provedor)["model"] == "gemini-3.5-flash-lite"
+    assert _chamada(provedor)["model"] == "gemini-3.6-flash"
 
 
 def test_resposta_truncada() -> None:

@@ -1,0 +1,247 @@
+{
+  "cardapio": "tivoli",
+  "tipo": "lido à mão",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Breakfast_menu_of_Tivoli_Cafe_2025-09-17.jpg",
+  "licenca": "CC0",
+  "conferencia": "Gabarito lido à mão a partir de ampliações da imagem original. 'ilegivel' indica preço que não pode ser lido: o certo é null ou ir para revisão.",
+  "itens": [
+    {
+      "categoria": "Breakfast",
+      "nome": "Greek Breakfast",
+      "preco": 9.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Breakfast",
+      "nome": "Kurdish Breakfast",
+      "preco": 9.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Breakfast",
+      "nome": "English Breakfast",
+      "preco": 9.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Cheese + mushroom",
+      "preco": 8.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Ham + Cheese",
+      "preco": 9.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Bacon, mushroom + Cheese",
+      "preco": 9.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Mixed veg + cheese",
+      "preco": 8.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Onion, tomato + cheese",
+      "preco": 8.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Omelette",
+      "nome": "Spanish Spinch",
+      "preco": 8.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Tuna Mayo sweetcorn",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Chicken tikka + cheese",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Coronation chicken + cheese",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Bacon + cheese",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Cheese",
+      "preco": 6.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Jacket Potato",
+      "nome": "Beans + cheese",
+      "preco": 7.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Homemade Cheese Burger",
+      "nome": "Homemade Cheese Burger",
+      "preco": 9.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Egg on toast",
+      "preco": 4.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Poached Egg on toast",
+      "preco": 5.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Egg + beans",
+      "preco": 6.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Eggs benedict",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Cheese on toast",
+      "preco": 5.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Smoked Salmon + scrambled egg",
+      "preco": 8.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Poached egg Avacado",
+      "preco": 7.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Scrambled Egg",
+      "preco": 5.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Jam on Toast",
+      "preco": 3.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Ham, egg + chips",
+      "preco": 7.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Beans, egg + chips",
+      "preco": 6.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Portion of Chips",
+      "preco": 2.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Cheesy Chips",
+      "preco": 3.99,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Bacon Sandwich",
+      "preco": 5.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Sausage Sandwich",
+      "preco": 5.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Breakfast Sandwich",
+      "preco": 5.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Falafel wrap",
+      "preco": 5.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "On Toast",
+      "nome": "Chicken Fillet Burger",
+      "preco": 9.99,
+      "variacoes": [],
+      "ilegivel": false
+    }
+  ]
+}

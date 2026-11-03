@@ -1,0 +1,399 @@
+{
+  "cardapio": "belchers",
+  "tipo": "lido à mão",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Breakfast_menu_-_Café_Belchers.jpg",
+  "licenca": "CC0",
+  "conferencia": "Gabarito lido à mão a partir de ampliações da imagem original. 'ilegivel' indica preço que não pode ser lido: o certo é null ou ir para revisão.",
+  "itens": [
+    {
+      "categoria": "Breakfasts",
+      "nome": "Set Breakfast",
+      "preco": 7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Breakfasts",
+      "nome": "Big Breakfast",
+      "preco": 10,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Breakfasts",
+      "nome": "Vege Breakfast",
+      "preco": 7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Breakfasts",
+      "nome": "Bubble Breakfast",
+      "preco": 7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Egg",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "2 Scrambled Eggs",
+      "preco": 2.4,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Bacon",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Sausage",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Beans",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Tomatoes",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Mushrooms",
+      "preco": 1.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Hash Browns (2)",
+      "preco": 1.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Black Pudding (2)",
+      "preco": 1.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Bubble & Squeak",
+      "preco": 3.8,
+      "variacoes": [
+        {
+          "nome": "½ Portion",
+          "preco": 1.9
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Ham",
+      "preco": 2.4,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Chips",
+      "preco": 3.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Vege-Sausage (Vegan)",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Fried Slice",
+      "preco": 0.7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Bread & Spread (Flora)",
+      "preco": 0.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Make Your Own",
+      "nome": "Toast",
+      "preco": 0.7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Bacon",
+      "preco": 3.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Sausage",
+      "preco": 3.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Sausage & Bacon",
+      "preco": 5.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Bacon & Egg",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Sausage & Egg",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Bacon & Cheese",
+      "preco": 4.7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "2 Eggs",
+      "preco": 3.6,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Vege-Sausage",
+      "preco": 3.7,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Vege-Sausage & Egg",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Ham",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Ham & Cheese",
+      "preco": 4.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Cheese",
+      "preco": 3.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Tuna & Mayo",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sandwiches",
+      "nome": "Breakfast Special (Bacon, Sausage & Egg)",
+      "preco": 5.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Mug of Tea",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Mug of Coffee",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Mug of Hot Chocolate",
+      "preco": 2.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Glass of Milk",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Cold Cans",
+      "preco": 1.3,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Orange Juice",
+      "preco": 1.8,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Apple Juice",
+      "preco": 1.8,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Mineral Water (Still)",
+      "preco": 1.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Drinks",
+      "nome": "Speciality Teas (Herbal, Fruit or Earl Grey)",
+      "preco": 1.4,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Toast",
+      "nome": "2 Slices of Toast with Beans",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toast",
+      "nome": "2 Slices of Toast with 1 Fried Egg",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toast",
+      "nome": "2 Slices of Toast with 2 Scrambled Eggs",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toast",
+      "nome": "1 Slice of Toast with Cheese",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Bacon",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Bacon & Egg",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Cheese",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Bacon & Cheese",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Vege-Sausage",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Sausage",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Ham & Cheese",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "Toasted Sandwiches",
+      "nome": "Ham",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    }
+  ]
+}

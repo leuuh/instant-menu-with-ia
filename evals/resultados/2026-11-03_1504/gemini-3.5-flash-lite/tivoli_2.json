@@ -1,0 +1,516 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": null,
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Breakfast",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Greek Breakfast",
+            "descricao_original": null,
+            "preco": 9.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "Kurdish Breakfast",
+            "descricao_original": null,
+            "preco": 9.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "English Breakfast",
+            "descricao_original": "2 Bacon, 2 Eggs, 1 Sausage, Beans, Tomato, Mushroom, Toast, Hashbrown",
+            "preco": 9.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Omelette",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Cheese + mushroom",
+            "descricao_original": "salad or chips",
+            "preco": 8.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Ham + Cheese",
+            "descricao_original": "salad or chips",
+            "preco": 9.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Bacon, mushroom + cheese",
+            "descricao_original": "salad or chips",
+            "preco": 9.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Mixed veg + cheese",
+            "descricao_original": "salad or chips",
+            "preco": 8.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Onion, tomato + cheese",
+            "descricao_original": "salad or chips",
+            "preco": 8.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Spanish Spinch",
+            "descricao_original": "salad or chips",
+            "preco": 8.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.85,
+            "observacao": "Spinch provável erro de digitação para Spinach"
+          }
+        ]
+      },
+      {
+        "nome": "Jacket Potato",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Tuna Mayo sweetcorn",
+            "descricao_original": "+ salad",
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo",
+              "frutos_do_mar",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Chicken tikka + cheese",
+            "descricao_original": "+ salad",
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Coronation chicken + cheese",
+            "descricao_original": "+ salad",
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Bacon + cheese",
+            "descricao_original": "+ salad",
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Cheese",
+            "descricao_original": "+ salad",
+            "preco": 6.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Beans + cheese",
+            "descricao_original": "+ salad",
+            "preco": 7.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Homemade Cheese Burger with Chips + Salad",
+        "categoria_inferida": true,
+        "itens": [
+          {
+            "nome": "Homemade Cheese Burger with Chips + Salad",
+            "descricao_original": null,
+            "preco": 9.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "On Toast",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Egg on toast",
+            "descricao_original": null,
+            "preco": 4.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Poached Egg on toast",
+            "descricao_original": null,
+            "preco": 5.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Egg + beans",
+            "descricao_original": null,
+            "preco": 6.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Eggs benedict",
+            "descricao_original": null,
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Cheese on toast",
+            "descricao_original": null,
+            "preco": 5.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Smoked Salmon + scrambled egg",
+            "descricao_original": null,
+            "preco": 8.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "frutos_do_mar"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Poached egg Avacado",
+            "descricao_original": null,
+            "preco": 7.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Scrambled Egg",
+            "descricao_original": null,
+            "preco": 5.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Jam on Toast",
+            "descricao_original": "butter + strawberry or marmalade",
+            "preco": 3.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Ham, egg + chips",
+            "descricao_original": null,
+            "preco": 7.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Beans, egg + chips",
+            "descricao_original": null,
+            "preco": 6.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Portion of Chips",
+            "descricao_original": null,
+            "preco": 2.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Cheesy Chips",
+            "descricao_original": null,
+            "preco": 3.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Bacon Sandwich",
+            "descricao_original": null,
+            "preco": 5.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Sausage Sandwich",
+            "descricao_original": null,
+            "preco": 5.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Breakfast Sandwich",
+            "descricao_original": null,
+            "preco": 5.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Falafel wrap",
+            "descricao_original": null,
+            "preco": 5.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          },
+          {
+            "nome": "Chicken Fillet Burger",
+            "descricao_original": "With Chips + salad",
+            "preco": 9.99,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "ovo",
+              "soja"
+            ],
+            "confianca": 0.9,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [
+    {
+      "categoria": "Omelette",
+      "indice_item": 5,
+      "nome": "Spanish Spinch",
+      "motivos": [
+        "confianca_baixa"
+      ]
+    }
+  ],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2995,
+    "tokens_saida": 3321,
+    "custo_estimado_usd": 0.009201,
+    "tempo_s": 70.34,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "tivoli.jpg",
+        "itens": 34,
+        "tokens_entrada": 2995,
+        "tokens_saida": 3321,
+        "custo_estimado_usd": 0.009201,
+        "tempo_s": 70.34,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

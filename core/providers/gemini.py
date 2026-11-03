@@ -29,7 +29,7 @@ FINAIS_NORMAIS = {None, types.FinishReason.STOP, types.FinishReason.FINISH_REASO
 
 class ProvedorGemini(ProvedorLLM):
     nome = "gemini"
-    modelo_padrao = "gemini-3.8-flash"
+    modelo_padrao = "gemini-3.5-flash-lite"  # escolhido pelos evals: docs/decisoes.md
 
     def __init__(
         self,

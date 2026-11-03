@@ -1,0 +1,85 @@
+{
+  "cardapio": "unithai",
+  "tipo": "conferido a olho",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Food_menu_on_the_wall_of_Unithai.jpg",
+  "licenca": "CC0",
+  "conferencia": "Gabarito conferido visualmente, item a item, comparando uma extração com a imagem; os nomes seguem a grafia do cardápio. Revise antes de tirar conclusões finas.",
+  "itens": [
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "Unithai's",
+      "preco": 10.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "RICE NOODLE CLEAR SOUP WITH CHICKEN",
+      "preco": 10.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "STIR FRIED UDON GREEN CURRY",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "CHICKEN/ PORK",
+          "preco": 9.95
+        },
+        {
+          "nome": "PRAWNS",
+          "preco": 10.95
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "\"SUKIYAKI\" GREEN BEANS NOODLE SOUP",
+      "preco": 10.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "\"MEE HOT\" (SPICY)",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "CHICKEN/ PORK",
+          "preco": 9.95
+        },
+        {
+          "nome": "PRAWNS",
+          "preco": 10.95
+        }
+      ],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "ROASTED DUCK CURRY",
+      "preco": 10.95,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Specials and Noodles",
+      "nome": "PAD KEE MAO",
+      "preco": null,
+      "variacoes": [
+        {
+          "nome": "CHICKEN/ PORK",
+          "preco": 9.95
+        },
+        {
+          "nome": "PRAWNS",
+          "preco": 10.95
+        }
+      ],
+      "ilegivel": false
+    }
+  ]
+}

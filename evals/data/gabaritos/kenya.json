@@ -1,0 +1,520 @@
+{
+  "cardapio": "kenya",
+  "tipo": "conferido a olho",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Menu_of_a_typical_Kenyan_restaurant.jpg",
+  "licenca": "CC BY-SA 4.0",
+  "conferencia": "Gabarito conferido visualmente, item a item, comparando uma extração com a imagem; os nomes seguem a grafia do cardápio. Revise antes de tirar conclusões finas.",
+  "itens": [
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Tea Cup",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "African Tea",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Black Tea",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Lemon Tea",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "White Coffee",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Black Coffee",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "White Milo",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "White Chocolate",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Uji Mug",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Milk",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO HOT BEVERAGES",
+      "nome": "Lemon Water",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Soda 500ml",
+      "preco": 60.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Soda 300ml",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Mineral Water 1 ltr",
+      "preco": 80.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Mineral water 500 ml",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Blended Fruit Juice",
+      "preco": 60.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COLD DRINKS",
+      "nome": "Novida",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Ndazi",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Doughnut",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Samosa",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Sausages",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Chapati",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Fried Egg Kienyeji",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Spanish omelet (2 eggs)",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Kebab",
+      "preco": 60.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Toast Mix",
+      "preco": 40.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Toast Plain",
+      "preco": 20.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Toast Blueband",
+      "preco": 30.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "SNACKS",
+      "nome": "Fruit Pudding",
+      "preco": 50.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO SPECIAL BREAKFAST",
+      "nome": "Special Samosa",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO SPECIAL BREAKFAST",
+      "nome": "Special sausage",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO SPECIAL BREAKFAST",
+      "nome": "Special Kebab",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO SPECIAL BREAKFAST",
+      "nome": "Special egg",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Githeri Plain",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Githeri Greens",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Ugali Sukuma/manage/ Terere",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Beef Plain",
+      "preco": 180.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Ugali Beef",
+      "preco": 220.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Githeri Special (beef greens)",
+      "preco": 190.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke Beans, Greens, chapatti",
+      "preco": 180.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke Beef Chapati greens",
+      "preco": 250.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke Rice Greens",
+      "preco": 180.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke greens",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke beef",
+      "preco": 220.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chapati Minji",
+      "preco": 150.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Rice Minji",
+      "preco": 150.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matoke Minji",
+      "preco": 150.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "1/2 Lunch Chapati/Ugali/Rice//Matoke",
+      "preco": 180.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "1/2 Lunch Pilau / Nduma",
+      "preco": 200.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Mukimo plain",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Mukimo Greens",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Mukimo, Beef, Greens",
+      "preco": 220.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matumbo Ugali Greens",
+      "preco": 170.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Matumbo Chapati Greens",
+      "preco": 170.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Rice Greens",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Rice Beef Greens",
+      "preco": 220.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Rice Njahi Greens",
+      "preco": 190.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Pilau Plain",
+      "preco": 100.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Pilau Greens",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Pilau Beef",
+      "preco": null,
+      "variacoes": [],
+      "ilegivel": true
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Nduma Greens",
+      "preco": 150.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Nduma Minji",
+      "preco": 170.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips plain",
+      "preco": 120.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Sausage",
+      "preco": 160.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Samosa",
+      "preco": 160.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Vegetables",
+      "preco": 170.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips & Quarter Chicken",
+      "preco": 320.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Beef Stew",
+      "preco": 270.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Beef fry",
+      "preco": 290.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Masala",
+      "preco": 200.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Chips Kebab",
+      "preco": 180.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Quarter plain",
+      "preco": 200.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "BUFFALO MAIN DISHES",
+      "nome": "Quarter Stew",
+      "preco": 250.0,
+      "variacoes": [],
+      "ilegivel": false
+    }
+  ]
+}

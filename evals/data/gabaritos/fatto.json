@@ -1,0 +1,100 @@
+{
+  "cardapio": "fatto",
+  "tipo": "conferido a olho",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Menu_of_Fatto_a_Mano_Pizzeria,_North_Laine_(desserts).jpg",
+  "licenca": "CC0",
+  "conferencia": "Gabarito conferido visualmente, item a item, comparando uma extração com a imagem; os nomes seguem a grafia do cardápio. Revise antes de tirar conclusões finas.",
+  "itens": [
+    {
+      "categoria": "Sobremesas",
+      "nome": "FATTO TIRAMISU",
+      "preco": 7.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sobremesas",
+      "nome": "SCUGNIZIELLI NUTELLA & GELATO",
+      "preco": 7.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sobremesas",
+      "nome": "AFFOGATO",
+      "preco": 6.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Sobremesas",
+      "nome": "AFFOGATO LIMONCELLO (vg)",
+      "preco": 7.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "GELATO SANDWICH",
+      "nome": "LEMON MERINGUE",
+      "preco": 7.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "GELATO SANDWICH",
+      "nome": "CHOCOLATE SALTED CARAMEL",
+      "preco": 7.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "GELATO SANDWICH",
+      "nome": "CHOCOLATE ORANGE (vg)",
+      "preco": 7.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "DIGESTIVO",
+      "nome": "LIMONCELLO",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "DIGESTIVO",
+      "nome": "CREMA DI PISTACHIO",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "DIGESTIVO",
+      "nome": "AMARO DEL CAPO",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "DIGESTIVO",
+      "nome": "MELONCELLO",
+      "preco": 4.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COFFEE",
+      "nome": "ESPRESSO",
+      "preco": 2.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "COFFEE",
+      "nome": "MACCHIATO",
+      "preco": 2.5,
+      "variacoes": [],
+      "ilegivel": false
+    }
+  ]
+}

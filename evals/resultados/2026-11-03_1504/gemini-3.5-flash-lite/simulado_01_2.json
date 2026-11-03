@@ -1,0 +1,286 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": "Recanto Fictício",
+      "telefone": "(11) 4000-0000",
+      "horario": "Ter. a dom., das 18h às 23h"
+    },
+    "categorias": [
+      {
+        "nome": "ENTRADAS",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Porção de batata frita",
+            "descricao_original": null,
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "P",
+                "preco": 18.0
+              },
+              {
+                "nome": "G",
+                "preco": 29.9
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Bolinho de bacalhau (6 un.)",
+            "descricao_original": "Com maionese de ervas",
+            "preco": 34.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo",
+              "frutos_do_mar"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Pastel de queijo",
+            "descricao_original": null,
+            "preco": 9.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 0.9,
+            "observacao": "Preço antigo R$ 8,00 riscado."
+          }
+        ]
+      },
+      {
+        "nome": "PIZZAS",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Portuguesa",
+            "descricao_original": "Presunto, ovo, cebola e azeitona",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "Meia",
+                "preco": 32.0
+              },
+              {
+                "nome": "Inteira",
+                "preco": 58.0
+              }
+            ],
+            "adicionais": [
+              {
+                "nome": "Borda recheada",
+                "preco": 8.0
+              }
+            ],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Quatro queijos",
+            "descricao_original": "Mussarela, provolone, parmesão e gorgonzola",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "Meia",
+                "preco": 34.0
+              },
+              {
+                "nome": "Inteira",
+                "preco": 62.0
+              }
+            ],
+            "adicionais": [
+              {
+                "nome": "Borda recheada",
+                "preco": 8.0
+              }
+            ],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "LANCHES",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "X-Tudo",
+            "descricao_original": "Pão, hambúrguer, ovo, bacon, queijo e salada",
+            "preco": 27.9,
+            "variacoes": [],
+            "adicionais": [
+              {
+                "nome": "bacon",
+                "preco": 4.0
+              },
+              {
+                "nome": "ovo",
+                "preco": 2.5
+              }
+            ],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose",
+              "ovo"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "X-Frango",
+            "descricao_original": "Pão, frango desfiado e requeijão",
+            "preco": null,
+            "variacoes": [],
+            "adicionais": [
+              {
+                "nome": "bacon",
+                "preco": 4.0
+              },
+              {
+                "nome": "ovo",
+                "preco": 2.5
+              }
+            ],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 0.6,
+            "observacao": "Preço ilegível devido a mancha na imagem."
+          },
+          {
+            "nome": "Misto quente",
+            "descricao_original": null,
+            "preco": 12.0,
+            "variacoes": [],
+            "adicionais": [
+              {
+                "nome": "bacon",
+                "preco": 4.0
+              },
+              {
+                "nome": "ovo",
+                "preco": 2.5
+              }
+            ],
+            "alergenicos_provaveis": [
+              "gluten",
+              "lactose"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "BEBIDAS",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Refrigerante lata",
+            "descricao_original": null,
+            "preco": 6.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Suco natural",
+            "descricao_original": null,
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "300ml",
+                "preco": 9.0
+              },
+              {
+                "nome": "500ml",
+                "preco": 14.0
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Água com gás",
+            "descricao_original": null,
+            "preco": null,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.5,
+            "observacao": "Preço cortado no canto da página."
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [
+    {
+      "categoria": "LANCHES",
+      "indice_item": 1,
+      "nome": "X-Frango",
+      "motivos": [
+        "confianca_baixa",
+        "preco_ausente"
+      ]
+    },
+    {
+      "categoria": "BEBIDAS",
+      "indice_item": 2,
+      "nome": "Água com gás",
+      "motivos": [
+        "confianca_baixa",
+        "preco_ausente"
+      ]
+    }
+  ],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2974,
+    "tokens_saida": 1773,
+    "custo_estimado_usd": 0.005325,
+    "tempo_s": 27.67,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "cardapio_simulado_01.jpg",
+        "itens": 11,
+        "tokens_entrada": 2974,
+        "tokens_saida": 1773,
+        "custo_estimado_usd": 0.005325,
+        "tempo_s": 27.67,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

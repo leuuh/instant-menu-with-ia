@@ -1,0 +1,154 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": "Unithai",
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Pratos Principais",
+        "categoria_inferida": true,
+        "itens": [
+          {
+            "nome": "Unithai's",
+            "descricao_original": "Amazing fried rice with chickens and prawns topped with a fried egg \"Medium Hot\"",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "ovo",
+              "frutos_do_mar"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "RICE NOODLE CLEAR SOUP",
+            "descricao_original": "WITH CHICKEN",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "STIR FRIED UDON GREEN CURRY",
+            "descricao_original": "FRESH UDON NOODLE",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN / PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "frutos_do_mar"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "\"SUKIYAKI\" GREEN BEANS NOODLE SOUP",
+            "descricao_original": "(MEDIUM HOT) PORK, SEAFOOD & VEGETABLES",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "frutos_do_mar"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "\"MEE HOT\"",
+            "descricao_original": "(SPICY) NOODLE WITH GREEN BEANS & ONIONS",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN / PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "frutos_do_mar"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "ROASTED DUCK CURRY",
+            "descricao_original": "ROASTED DUCK COOKED IN MEDIUM RED CURRY PASTE WITH PINEAPPLE, TOMATO & LIME LEAVES",
+            "preco": 10.95,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 0.95,
+            "observacao": null
+          },
+          {
+            "nome": "PAD KEE MAO",
+            "descricao_original": "DRUNKEN NOODLES",
+            "preco": null,
+            "variacoes": [
+              {
+                "nome": "CHICKEN / PORK",
+                "preco": 9.95
+              },
+              {
+                "nome": "PRAWNS",
+                "preco": 10.95
+              }
+            ],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "gluten",
+              "frutos_do_mar"
+            ],
+            "confianca": 0.95,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2941,
+    "tokens_saida": 1041,
+    "custo_estimado_usd": 0.003485,
+    "tempo_s": 34.78,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "unithai.jpg",
+        "itens": 7,
+        "tokens_entrada": 2941,
+        "tokens_saida": 1041,
+        "custo_estimado_usd": 0.003485,
+        "tempo_s": 34.78,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

@@ -1,0 +1,34 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": null,
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": []
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2947,
+    "tokens_saida": 43,
+    "custo_estimado_usd": 0.000992,
+    "tempo_s": 20.36,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "salao.jpg",
+        "itens": 0,
+        "tokens_entrada": 2947,
+        "tokens_saida": 43,
+        "custo_estimado_usd": 0.000992,
+        "tempo_s": 20.36,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}

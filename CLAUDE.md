@@ -6,7 +6,7 @@ Leia `docs/projeto.md` (briefing e fases) e `docs/decisoes.md` (decisões, medi�
 - Trabalhe em uma fase por vez e pare ao fim de cada uma para revisão.
 - Faça commit e push só quando pedirem. Fases em andamento ficam em um branch `fase-N`.
 - Nunca coloque a chave de API no código ou no git: ela fica só no `.env`.
-- Não coloque no repositório cardápios de empresas reais. Fotos reais de teste são referenciadas em `evals/data/fotos_reais.json`.
+- Não coloque no repositório cardápios de empresas reais. Fotos reais de teste ficam referenciadas pela URL em `evals/data/gabaritos/` e são baixadas para `evals/cache/`.
 - Não afirme desempenho em fotos reais com base na imagem simulada.
 - Mudança em prompt ou modelo se mede com várias execuções: os resultados variam entre execuções.
 

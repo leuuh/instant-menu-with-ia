@@ -1,0 +1,93 @@
+{
+  "cardapio": "lyon",
+  "tipo": "conferido a olho",
+  "arquivo": "https://commons.wikimedia.org/wiki/File:Menu_du_jour_d'un_restaurant_asiatique_lyonnais_en_2017.jpg",
+  "licenca": "CC0",
+  "conferencia": "Gabarito conferido visualmente, item a item, comparando uma extração com a imagem; os nomes seguem a grafia do cardápio. Revise antes de tirar conclusões finas.",
+  "itens": [
+    {
+      "categoria": "Formules",
+      "nome": "Plat du Jour",
+      "preco": 9.2,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Formules",
+      "nome": "Entrée + Plat",
+      "preco": 14.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Formules",
+      "nome": "Entrée + Plat + dessert",
+      "preco": 18.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les entrées",
+      "nome": "Nems porc ou poulet",
+      "preco": 5.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les entrées",
+      "nome": "Beignets aux crevettes",
+      "preco": 5.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les entrées",
+      "nome": "Salade Riz pai",
+      "preco": 5.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les entrées",
+      "nome": "Bì cuốn",
+      "preco": 5.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les plats",
+      "nome": "Bò Bún",
+      "preco": 9.8,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les plats",
+      "nome": "Maxi Bò Bún",
+      "preco": 14.9,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les plats",
+      "nome": "Poulet croustillant",
+      "preco": 12.0,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les plats",
+      "nome": "Bún bí chay",
+      "preco": 10.5,
+      "variacoes": [],
+      "ilegivel": false
+    },
+    {
+      "categoria": "Les plats",
+      "nome": "Bò kho",
+      "preco": 11.0,
+      "variacoes": [],
+      "ilegivel": false
+    }
+  ]
+}

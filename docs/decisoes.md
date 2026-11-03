@@ -180,3 +180,59 @@ Testei regras para exigir `null` quando faltasse qualquer dígito, limitar a con
 - O teste de várias fotos usou cortes de uma mesma foto, não fotos tiradas separadamente.
 - Geração de descrição em um cardápio muito grande não foi testada além de 40 itens.
 - O limite de 3 chamadas paralelas não foi testado contra a cota do nível gratuito com 5 fotos.
+
+## Fase 4 — avaliação e comparação de modelos (nov/2026)
+
+### 31. Gabaritos em um formato único, com a origem explícita
+- Cada cardápio tem um JSON em `evals/data/gabaritos/`, com itens (categoria, nome, preço, variações e se o preço é ilegível), arquivo, licença e tipo de gabarito.
+- São 9 cardápios e 205 itens:
+    - 1 simulado com gabarito **exato** (11 itens);
+    - 2 fotos **lidas à mão** em ampliações (Belchers 55 e Tivoli 34);
+    - 4 fotos **conferidas a olho** (Lyon, Fatto, Unithai e Kenya, 105 itens);
+    - 2 fotos **sem cardápio** (fachada e salão), em que qualquer item extraído é invenção.
+- Os gabaritos conferidos a olho partiram de extrações do `gemini-3.5-flash-lite`, corrigidas pela imagem. Os preços foram conferidos, mas os nomes seguem o jeito daquele modelo de separar e escrever os itens, o que pode favorecê-lo no recall e na precisão. O relatório mostra o tipo de cada gabarito.
+- As fotos reais não estão no repositório: `evals/run_evals.py` as baixa da Wikimedia Commons para `evals/cache/` na primeira execução.
+
+### 32. Métricas
+- **Recall e precisão:** itens casados pelo nome, com tolerância a acentos, pontuação e pequenas diferenças (similaridade ≥ 0,8, ou o nome é o começo do outro). A categoria só desempata, porque "Bacon" existe em três seções da Belchers. Cada item casa uma vez só, os mais parecidos primeiro.
+- **Preço correto:** o conjunto de preços do item (preço e variações) é igual ao do gabarito. "3,80 e meia porção 1,90" pode vir como preço mais variação ou como duas variações, e os dois jeitos estão certos.
+    - **Limitação:** não confere qual preço foi para qual variação.
+    - Na primeira versão, a comparação exigia a mesma organização e contava como erro uma resposta correta do `gemini-3.6-flash`. Corrigi e reavaliei os dados salvos.
+- Além do que o briefing pede, o relatório traz as duas métricas que os testes reais mostraram ser as mais graves:
+    - **preço errado sem aviso**;
+    - **preço ilegível que recebeu valor e não foi para revisão**.
+- As taxas saem da soma das contagens de todas as execuções, não de médias de médias.
+
+### 33. Como a avaliação roda
+- Os cardápios rodam um de cada vez, para o tempo ser o de um cardápio sozinho. Os modelos se alternam a cada cardápio, para uma instabilidade do provedor afetar todos igualmente.
+- Cada execução fica salva em JSON:
+    - `--reavaliar` recalcula o relatório sem chamar a API;
+    - `--retomar` refaz só o que falhou (por exemplo, quando a cota diária acaba).
+- Tudo é testado com o provedor fake, sem rede.
+
+### 34. Resultado de 03/11/2026 e escolha do modelo
+Foram 3 execuções por modelo em cada cardápio (`evals/resultados/2026-11-03_1504/`):
+
+| Modelo | Recall | Precisão | Preço correto | Preço errado sem aviso | Ilegível com preço e sem aviso | Tempo médio | Custo médio | Falhas |
+|---|---|---|---|---|---|---|---|---|
+| gemini-3.5-flash-lite | 98,7% | 99,0% | 100% (569/569) | 0 | 5 de 38 | 22,9 s | US$ 0,0069 | 0 de 27 |
+| gemini-3.6-flash | 92,7% | 95,6% | 100% (232/232) | 0 | 1 de 9 | 35,5 s | US$ 0,0149 | 14 de 27 (cota) |
+
+- **Decisão: o padrão do código passa a ser `gemini-3.5-flash-lite`.**
+    - Foi o único a completar todas as execuções. Leu todos os preços legíveis corretamente, não inventou itens nas fotos sem cardápio e custa menos da metade.
+    - O `gemini-3.8-flash`, padrão até aqui, respondeu 503 em todas as tentativas desde 30/10.
+    - O `gemini-3.6-flash` estourou a cota diária gratuita (erro 429) no meio da rodada. Com 13 execuções, não mostrou vantagem na leitura.
+- **Belchers:** nas 3 execuções de hoje, o `flash-lite` leu certo a coluna de sanduíches que, em 30/10, saiu deslocada em 2 de 6. Não dá para concluir que o problema acabou: 3 execuções são poucas, e o modelo servido pelo Google pode ter mudado.
+- **O que continua errado:** o preço ilegível ainda recebe um valor. Foram 5 casos sem aviso: 2 itens do painel desbotado da Belchers numa das execuções, e o `Pilau Beef` do Quênia nas 3. O limite de revisão de 0,9 pegou os outros 33.
+- **Tempo:** a latência da API variou muito no dia (de 5 a 80 s por cardápio). Em 30/10 as mesmas fotos levavam de 5 a 25 s, então a média de tempo deste dia não representa um dia normal.
+
+### 35. O que as pendências da Fase 2 viraram
+- Comparar modelos na resolução máxima: feito, com a ressalva da cota do `gemini-3.6-flash`. Para completar: `python -m evals.run_evals --retomar evals/resultados/2026-11-03_1504`.
+- Segunda leitura para pegar preços inventados: não implementada. Os 5 casos ilegíveis sem aviso são o número a melhorar. Uma segunda leitura dobraria o custo, e a avaliação agora permite medir se vale.
+- `media_resolution` e nível de raciocínio: só a resolução máxima foi medida; o raciocínio continua no padrão do modelo.
+
+### Limitações da avaliação
+- A base é pequena: 205 itens. Só o simulado está em português e em reais; as fotos reais são de cardápios em inglês, francês e do Quênia.
+- 4 gabaritos foram conferidos a olho a partir de um dos modelos comparados.
+- A comparação com o `gemini-3.6-flash` está incompleta.
+- As descrições sugeridas não entram na avaliação: foram julgadas a olho na Fase 3.

@@ -1,0 +1,177 @@
+{
+  "cardapio": {
+    "info_restaurante": {
+      "nome": null,
+      "telefone": null,
+      "horario": null
+    },
+    "categorias": [
+      {
+        "nome": "Formules",
+        "categoria_inferida": true,
+        "itens": [
+          {
+            "nome": "Plat du Jour",
+            "descricao_original": null,
+            "preco": 9.2,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Entrée + Plat",
+            "descricao_original": null,
+            "preco": 14.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": "Formules midi"
+          },
+          {
+            "nome": "Entrée + Plat + dessert",
+            "descricao_original": null,
+            "preco": 18.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": "Formule midi et soir"
+          }
+        ]
+      },
+      {
+        "nome": "Les entrées",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Nems",
+            "descricao_original": "porc ou poulet x4",
+            "preco": 5.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Beignets aux crevettes",
+            "descricao_original": "x3",
+            "preco": 5.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "frutos_do_mar"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Salade Rizpai",
+            "descricao_original": "(Porc et Poulet)",
+            "preco": 5.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Bô cuôn",
+            "descricao_original": "(Rouleaux frais au porc) x2",
+            "preco": 5.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      },
+      {
+        "nome": "Les plats",
+        "categoria_inferida": false,
+        "itens": [
+          {
+            "nome": "Bò Bún",
+            "descricao_original": "(crudités, vermicelles, nems, bœuf aux oignons)",
+            "preco": 9.8,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Maxi Bò Bún",
+            "descricao_original": "(formule + 4€00)",
+            "preco": 14.9,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Poulet croustillant",
+            "descricao_original": "(formule + 1€50)",
+            "preco": 12.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Bún bí chay",
+            "descricao_original": "[Crudites, vermicelles de riz, Tofu, Pommes de terre, patates douces...]",
+            "preco": 10.5,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [
+              "soja"
+            ],
+            "confianca": 1.0,
+            "observacao": null
+          },
+          {
+            "nome": "Bò kho",
+            "descricao_original": "(bœuf mijoté aux carottes et aux 5 épices)",
+            "preco": 11.0,
+            "variacoes": [],
+            "adicionais": [],
+            "alergenicos_provaveis": [],
+            "confianca": 1.0,
+            "observacao": null
+          }
+        ]
+      }
+    ]
+  },
+  "revisao": [],
+  "metricas": {
+    "provedor": "gemini",
+    "modelo": "gemini-3.5-flash-lite",
+    "prompt_sha": "1895155f",
+    "tokens_entrada": 2941,
+    "tokens_saida": 1254,
+    "custo_estimado_usd": 0.004017,
+    "tempo_s": 20.1,
+    "tentativas": 1,
+    "arquivos": [
+      {
+        "nome": "lyon.jpg",
+        "itens": 12,
+        "tokens_entrada": 2941,
+        "tokens_saida": 1254,
+        "custo_estimado_usd": 0.004017,
+        "tempo_s": 20.1,
+        "tentativas": 1,
+        "erro": null
+      }
+    ]
+  },
+  "avisos": []
+}
