@@ -236,3 +236,20 @@ Foram 3 execuções por modelo em cada cardápio (`evals/resultados/2026-11-03_1
 - 4 gabaritos foram conferidos a olho a partir de um dos modelos comparados.
 - A comparação com o `gemini-3.6-flash` está incompleta.
 - As descrições sugeridas não entram na avaliação: foram julgadas a olho na Fase 3.
+
+## Fase 5 — CI, versão pública e README (nov/2026)
+
+### 36. CI no GitHub Actions
+- A cada push, o CI roda lint, formatação, tipos (mypy estrito) e os testes offline, em Python 3.11 e 3.13 no Linux. A primeira execução passou nas duas versões, confirmando o "Python 3.11+" que até então só tinha sido testado no 3.14, no Windows.
+- Os testes `live` ficam de fora porque o CI não tem a chave. Rodam localmente com `python -m pytest -m live`.
+
+### 37. Proteções da versão pública
+- A chave da API é do dono. Num app público, sem proteção, qualquer visitante gastaria a cota dele.
+- **`SENHA_ACESSO` (opcional):** com a senha definida, extração e descrições só rodam para quem a digitar na barra lateral. Sem a senha definida, nada muda no uso local.
+- **`MAX_USOS_IA_POR_DIA`:** conta extrações e descrições somando todos os visitantes. A contagem fica na memória do servidor e recomeça quando o app reinicia; é uma barreira contra abuso, não um controle de faturamento.
+- **Exemplo pronto:** uma leitura salva do cardápio fictício, a mesma que entrou na avaliação, abre o fluxo completo sem chamar a IA. É o que um visitante sem senha consegue usar.
+- **Limitação:** a senha é única e compartilhada, sem login por pessoa.
+
+### 38. Deploy no Streamlit Community Cloud
+- Publica a partir da `main`. Os secrets do nível raiz viram variáveis de ambiente, e é assim que a configuração do app os lê. O passo a passo está em [deploy.md](deploy.md).
+- O deploy exige o login do dono na conta do Streamlit e ainda não foi feito.
