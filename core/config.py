@@ -28,6 +28,8 @@ class Config(BaseSettings):
     max_lado_imagem: int = Field(default=3072, ge=256)
     max_chamadas_paralelas: int = Field(default=3, ge=1)
     cotacao_usd_brl: Decimal = Field(default=Decimal("5.42"), gt=0)  # PTAX venda de 30/10/2026
+    senha_acesso: SecretStr | None = None  # definida: a IA só roda com a senha (versão pública)
+    max_usos_ia_por_dia: int = Field(default=200, ge=1)
     dir_logs: Path = RAIZ_PROJETO / "logs"
 
     def para_descricoes(self) -> "Config":

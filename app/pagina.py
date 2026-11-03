@@ -10,8 +10,9 @@ import pandas as pd
 import streamlit as st
 from streamlit.delta_generator import DeltaGenerator
 
-from core.arquivos import Entrada, preparar_arquivos
-from core.config import Config
+from app.acesso import LimiteDiario, senha_confere
+from core.arquivos import Entrada, carregar_arquivos, preparar_arquivos
+from core.config import RAIZ_PROJETO, Config
 from core.edicao import (
     ROTULOS_ALERGENICOS,
     CardapioEditado,
@@ -24,12 +25,18 @@ from core.export import exportar_csv, exportar_json
 from core.extract import ERROS_EXTRACAO, extrair_entradas
 from core.precos import VERIFICADO_EM
 from core.providers import criar_provedor
-from core.revisao import rotular_motivos
+from core.revisao import itens_para_revisao, rotular_motivos
 from core.schema import Alergenico, InfoRestaurante, MetricasLLM, ResultadoExtracao
 
 CHAVE_EXTRACAO = "extracao"
 CHAVE_VERSAO = "versao_extracao"
 CHAVE_MENSAGEM = "mensagem_descricoes"
+CHAVE_SENHA = "senha_acesso"
+ARQUIVO_EXEMPLO = RAIZ_PROJETO / "app" / "exemplo" / "extracao.json"
+FOTO_EXEMPLO = RAIZ_PROJETO / "evals" / "data" / "cardapio_simulado_01.jpg"
+MENSAGEM_LIMITE = (
+    "O limite diário de uso da IA desta demonstração foi atingido. Tente amanhã ou veja o exemplo."
+)
 TIPOS_ACEITOS = ["jpg", "jpeg", "png", "pdf"]
 COR_DESTAQUE = "background-color: rgba(255, 193, 7, 0.3)"
 ALTURA_LINHA = 36  # px; as duas linhas extras são o cabeçalho e a de adicionar item
@@ -89,6 +96,7 @@ class Extracao:
     versao_tabela: int = 0
     tem_sugestoes: bool = False
     metricas_descricoes: list[MetricasLLM] = field(default_factory=list)
+    exemplo: bool = False  # leitura salva: nenhuma chamada à IA foi feita agora
 
 
 def main() -> None:
@@ -96,34 +104,91 @@ def main() -> None:
     st.title("Cardápio Instantâneo")
     st.write("Envie fotos ou o PDF do cardápio e revise o resultado antes de exportar.")
     config = Config()
-    _secao_upload(config)
+    liberado = _acesso_liberado(config)
+    _secao_upload(config, liberado)
     extracao: Extracao | None = st.session_state.get(CHAVE_EXTRACAO)
     if extracao is not None:
-        _secao_revisao(extracao, config)
+        _secao_revisao(extracao, config, liberado)
 
 
-def _secao_upload(config: Config) -> None:
+@st.cache_resource
+def limite_diario(limite: int) -> LimiteDiario:
+    """Um contador por servidor, compartilhado entre os visitantes."""
+    return LimiteDiario(limite)
+
+
+def _acesso_liberado(config: Config) -> bool:
+    """Sem senha configurada (uso local), a IA fica sempre liberada."""
+    if config.senha_acesso is None:
+        return True
+    with st.sidebar:
+        st.subheader("Acesso à IA")
+        senha = st.text_input("Senha", type="password", key=CHAVE_SENHA)
+        if not senha:
+            st.caption("Sem a senha, você pode explorar o exemplo pronto.")
+            return False
+        if senha_confere(senha, config.senha_acesso.get_secret_value()):
+            st.success("Acesso liberado.")
+            return True
+        st.error("Senha incorreta.")
+        return False
+
+
+def _usar_ia(config: Config) -> bool:
+    """Consome um uso do limite diário; mostra o aviso quando o limite acabou."""
+    if limite_diario(config.max_usos_ia_por_dia).consumir():
+        return True
+    st.error(MENSAGEM_LIMITE)
+    return False
+
+
+def _secao_upload(config: Config, liberado: bool) -> None:
+    if not liberado:
+        st.info(
+            "Nesta demonstração, a leitura com IA pede uma senha (na barra lateral). "
+            "Sem ela, use o exemplo pronto: um cardápio fictício já lido pela IA."
+        )
     arquivos = st.file_uploader(
         "Até 5 fotos ou 1 PDF do cardápio", type=TIPOS_ACEITOS, accept_multiple_files=True
     )
     st.caption("Os arquivos são enviados ao provedor de IA configurado para fazer a leitura.")
-    if st.button("Extrair cardápio", type="primary", disabled=not arquivos):
+    extrair, exemplo = st.columns([1, 3])
+    if extrair.button("Extrair cardápio", type="primary", disabled=not arquivos or not liberado):
         _extrair([(arquivo.name, arquivo.getvalue()) for arquivo in arquivos], config)
+    if exemplo.button("Ver um exemplo pronto", help="Não faz nenhuma chamada à IA."):
+        _carregar_exemplo(config)
 
 
 def _extrair(arquivos: Sequence[tuple[str, bytes]], config: Config) -> None:
     with st.spinner("Lendo o cardápio..."):
         try:
             entradas = preparar_arquivos(arquivos, config.max_lado_imagem)
+            if not _usar_ia(config):
+                return
             resultado = extrair_entradas(entradas, criar_provedor(config), config)
         except ERROS_EXTRACAO as erro:
             st.error(f"Não foi possível ler o cardápio. {erro}")
             return
+    _guardar_extracao(entradas, resultado, config)
+
+
+def _carregar_exemplo(config: Config) -> None:
+    resultado = ResultadoExtracao.model_validate_json(ARQUIVO_EXEMPLO.read_text(encoding="utf-8"))
+    resultado.revisao = itens_para_revisao(resultado.cardapio, config.limiar_confianca)
+    entradas = carregar_arquivos([FOTO_EXEMPLO], config.max_lado_imagem)
+    _guardar_extracao(entradas, resultado, config, exemplo=True)
+
+
+def _guardar_extracao(
+    entradas: list[Entrada], resultado: ResultadoExtracao, config: Config, exemplo: bool = False
+) -> None:
     versao = st.session_state.get(CHAVE_VERSAO, 0) + 1
     st.session_state[CHAVE_VERSAO] = versao
     st.session_state.pop(CHAVE_MENSAGEM, None)
     tabela = _criar_tabela(para_linhas(resultado.cardapio, config.limiar_confianca))
-    st.session_state[CHAVE_EXTRACAO] = Extracao(versao, entradas, resultado, tabela)
+    st.session_state[CHAVE_EXTRACAO] = Extracao(
+        versao, entradas, resultado, tabela, exemplo=exemplo
+    )
 
 
 def _criar_tabela(linhas: list[Linha]) -> pd.DataFrame:
@@ -132,9 +197,15 @@ def _criar_tabela(linhas: list[Linha]) -> pd.DataFrame:
     return tabela
 
 
-def _secao_revisao(extracao: Extracao, config: Config) -> None:
+def _secao_revisao(extracao: Extracao, config: Config, liberado: bool) -> None:
     st.divider()
     st.subheader("Revise o cardápio")
+    if extracao.exemplo:
+        st.info(
+            "Exemplo pronto: cardápio fictício lido antes pela IA. Nenhuma chamada foi feita "
+            "agora; o tempo e o custo do painel são os da leitura original. Edite e exporte à "
+            "vontade."
+        )
     _mostrar_painel(extracao, config)
     for aviso in extracao.resultado.avisos:
         st.warning(aviso)
@@ -153,7 +224,7 @@ def _secao_revisao(extracao: Extracao, config: Config) -> None:
         )
         with situacao:
             _mostrar_situacao(edicao)
-        _acoes_de_descricoes(acoes, extracao, linhas, config)
+        _acoes_de_descricoes(acoes, extracao, linhas, config, liberado)
         _secao_exportacao(edicao, extracao.entradas)
 
 
@@ -314,10 +385,17 @@ def _mostrar_situacao(edicao: CardapioEditado) -> None:
 
 
 def _acoes_de_descricoes(
-    area: DeltaGenerator, extracao: Extracao, linhas: list[Linha], config: Config
+    area: DeltaGenerator,
+    extracao: Extracao,
+    linhas: list[Linha],
+    config: Config,
+    liberado: bool,
 ) -> None:
     gerar, usar_todas, manter_originais = area.columns(3)
-    if gerar.button("Gerar descrições sugeridas", width="stretch"):
+    ajuda = None if liberado else "Pede a senha de acesso à IA."
+    if gerar.button(
+        "Gerar descrições sugeridas", width="stretch", disabled=not liberado, help=ajuda
+    ):
         with area, st.spinner("Escrevendo as descrições..."):
             _gerar_sugestoes(area, extracao, linhas, config)
     if extracao.tem_sugestoes:
@@ -336,6 +414,8 @@ def _gerar_sugestoes(
     itens = _itens_para_descrever(linhas)
     if not itens:
         area.warning("Não há itens para descrever.")
+        return
+    if not _usar_ia(config):
         return
     try:
         resultado = gerar_descricoes(itens, criar_provedor(config.para_descricoes()), config)

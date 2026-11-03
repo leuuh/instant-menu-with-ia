@@ -31,6 +31,7 @@ def abrir_app(
     monkeypatch: pytest.MonkeyPatch, config: Config
 ) -> Callable[[CriarProvedor], AppTest]:
     def abrir(criar: CriarProvedor) -> AppTest:
+        pagina.limite_diario.clear()  # o contador é compartilhado entre sessões e testes
         monkeypatch.setattr(pagina, "Config", lambda: config)
         monkeypatch.setattr(pagina, "criar_provedor", criar)
         return AppTest.from_file(SCRIPT, default_timeout=30).run()
