@@ -17,7 +17,7 @@ dono: o sistema destaca o que precisa ser conferido e nunca troca um preço por 
 
 ## Demo
 
-Link público: *a publicar* (guia em [docs/deploy.md](docs/deploy.md)).
+Link público: https://instant-menu-with-ia-dnfvhjf83ewu5xwqj4kqs7.streamlit.app/
 
 Na versão pública, a leitura com IA pede uma senha, porque a chave da API tem custo. Sem a senha, o
 botão **Ver um exemplo pronto** abre um cardápio fictício já lido pela IA, com o mesmo fluxo de
